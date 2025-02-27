@@ -1,4 +1,3 @@
-
 // 2. Create a notification service (src/services/NotificationService.js)
 export class NotificationService {
     static async requestPermission() {
@@ -20,11 +19,11 @@ export class NotificationService {
         throw new Error('ServiceWorker not supported');
     }
 
-    static async subscribeToPushNotifications(registration : ServiceWorkerRegistration) {
+    static async subscribeToPushNotifications(registration: ServiceWorkerRegistration) {
         try {
             const subscription = await registration.pushManager.subscribe({
                 userVisibleOnly: true,
-                applicationServerKey: urlBase64ToUint8Array('BOex-AxpWOfnzSt5_o6DBpVOSVZIgm6rkQh-9wFJ-9WGBch4Ljp57Lg5dXJC86-JMzSjjiRZq9NloAIgH-XTBEE')
+                applicationServerKey: urlBase64ToUint8Array("BImXtAWdYXPKpCYFYiISx7reiHQ1xo_yQpee20wsKroHQNKYU7q_6geAWdAXzckPL3DNeVDH1JaRwNPaXf9o808")
             });
 
             // Send subscription to your server
@@ -44,7 +43,7 @@ export class NotificationService {
 }
 
 // Helper function to convert VAPID key
-function urlBase64ToUint8Array(base64String : string) {
+function urlBase64ToUint8Array(base64String: string) {
     const padding = '='.repeat((4 - base64String.length % 4) % 4);
     const base64 = (base64String + padding)
         .replace(/\-/g, '+')
