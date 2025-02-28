@@ -2,13 +2,12 @@
 
 import {useState} from 'react'
 
-import './app/App.css'
-import {NotificationTest} from "./NotificationTest.tsx";
-import NotificationSetup from "./component/NotificationSetup.tsx";
 
-function App() {
+import {NotificationTest} from "../NotificationTest";
+import NotificationSetup from "../component/NotificationSetup";
+
+function HomePage() {
     const [count, setCount] = useState(0)
-
 
     return (
         <>
@@ -30,7 +29,4 @@ function App() {
     )
 }
 
-export default App
-
-
-
+export default HomePage
