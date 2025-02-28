@@ -16,7 +16,7 @@ const testServerNotification = async () => {
     }
 
     console.log('Sending notification from server');
-    await api.post('/push/notify', {
+    await api.post('/api/public/push/notify', {
         message: 'Test notification from server'
     })
 };

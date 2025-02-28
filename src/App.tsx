@@ -4,7 +4,7 @@ import {useState} from 'react'
 
 import './app/App.css'
 import {NotificationTest} from "./NotificationTest.tsx";
-import NotificationSetup from "./component/NotificationSetup.tsx";
+import NotificationSetup from "@/components/NotificationSetup.tsx";
 
 function App() {
     const [count, setCount] = useState(0)

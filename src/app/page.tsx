@@ -4,7 +4,7 @@ import {useState} from 'react'
 
 
 import {NotificationTest} from "../NotificationTest";
-import NotificationSetup from "../component/NotificationSetup";
+import NotificationSetup from "@/components/NotificationSetup";
 
 function HomePage() {
     const [count, setCount] = useState(0)

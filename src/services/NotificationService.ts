@@ -1,5 +1,6 @@
 // 2. Create a notification service (src/services/NotificationService.js)
 import {urlBase64ToUint8Array} from "./UrlBase64ToUint8Array.ts";
+import {api} from "@/services/axiosClient.ts";
 
 export class NotificationService {
     static async requestPermission() {
@@ -29,13 +30,7 @@ export class NotificationService {
             });
 
             // Send subscription to your server
-            await fetch('http://localhost:8080/api/push/subscribe', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(subscription)
-            });
+            await api.post('/api/public/push/subscribe', subscription);
 
             return subscription;
         } catch (error) {
