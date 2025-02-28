@@ -7,19 +7,15 @@ const publicRoutes = ['/auth/sign-in', '/auth/sign-up']
 
 
 export async function middleware(req: NextRequest) {
-    console.log('Middleware:', req)
-
-    // 2. Check if the current route is protected or public
     const path = req.nextUrl.pathname
     const isPublicRoute = publicRoutes.includes(path)
 
-    // Get token from cookies directly using NextRequest
     const token = req.cookies.get(ACCESS_TOKEN)?.value
 
 
     if (isPublicRoute && token) {
         console.log('User already logged in, redirecting to dashboard')
-        return NextResponse.redirect(new URL('/', req.url))
+        return NextResponse.redirect(new URL('/dashboard', req.url))
     }
 
     // Redirect to sign-in if route is protected and no token exists
