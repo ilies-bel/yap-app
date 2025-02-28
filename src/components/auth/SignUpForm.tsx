@@ -2,13 +2,13 @@ import {useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {z} from 'zod';
 import {zodResolver} from '@hookform/resolvers/zod';
-import {useAuth} from '@/context/AuthContext';
 import {useRouter} from 'next/navigation';
 import Link from 'next/link';
 import {Button} from '@/components/ui/button';
 import {Input} from '@/components/ui/input';
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {Alert, AlertDescription} from '@/components/ui/alert';
+import {useAuth} from "@/lib/auth/AuthContext";
 
 const formSchema = z.object({
     username: z.string().min(3, {
@@ -22,6 +22,8 @@ const formSchema = z.object({
     message: "Passwords don't match",
     path: ["confirmPassword"],
 });
+
+type FormType = z.infer<typeof formSchema>;
 
 export function SignUpForm() {
     const {register} = useAuth();
@@ -38,7 +40,7 @@ export function SignUpForm() {
         },
     });
 
-    const onSubmit = async (values) => {
+    const onSubmit = async (values: FormType) => {
         setIsLoading(true);
         setError('');
 
@@ -46,6 +48,7 @@ export function SignUpForm() {
             await register(values.username, values.password);
             router.push('/auth/sign-in?registered=true');
         } catch (error) {
+            // @ts-expect-error dkdkdk
             setError(error.message || 'Something went wrong. Please try again.');
         } finally {
             setIsLoading(false);

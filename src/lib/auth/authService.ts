@@ -1,21 +1,23 @@
 import Cookies from 'js-cookie';
-import {ACCESS_TOKEN, api} from "@/services/axiosClient.ts";
+import {ACCESS_TOKEN, api} from "@/services/axiosClient";
 
 
 // Auth functions
 export const authService = {
     // Register new user
-    register: async (username, password) => {
+    register: async (username: string, password: string) => {
         try {
             const response = await api.post('/auth/register', {username, password});
             return response.data;
         } catch (error) {
+            // @ts-expect-error dkdkdk
+
             throw error.response?.data || {message: 'Registration failed'};
         }
     },
 
     // Login user
-    login: async (username, password) => {
+    login: async (username: string, password: string) => {
         try {
             const response = await api.post('/auth/login', {username, password});
             const {token} = response.data;
@@ -25,6 +27,8 @@ export const authService = {
 
             return response.data;
         } catch (error) {
+            // @ts-expect-error dkdkdk
+
             throw error.response?.data || {message: 'Login failed'};
         }
     },

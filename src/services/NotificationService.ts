@@ -1,6 +1,7 @@
 // 2. Create a notification service (src/services/NotificationService.js)
-import {urlBase64ToUint8Array} from "./UrlBase64ToUint8Array.ts";
-import {api} from "@/services/axiosClient.ts";
+
+import {urlBase64ToUint8Array} from "@/services/UrlBase64ToUint8Array";
+import {api} from "@/services/axiosClient";
 
 export class NotificationService {
     static async requestPermission() {

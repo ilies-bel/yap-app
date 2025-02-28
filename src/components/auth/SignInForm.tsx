@@ -1,19 +1,21 @@
-import {useState} from 'react';
+import React, {useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {z} from 'zod';
 import {zodResolver} from '@hookform/resolvers/zod';
-import {useAuth} from '@/context/AuthContext';
 import {useRouter, useSearchParams} from 'next/navigation';
 import Link from 'next/link';
-import {Button} from '@/components/ui/button';
-import {Input} from '@/components/ui/input';
-import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
-import {Alert, AlertDescription} from '@/components/ui/alert';
+import {useAuth} from "@/lib/auth/AuthContext";
+import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form";
+import {Button} from "@/components/ui/button";
+import {Alert, AlertDescription} from "@/components/ui/alert";
+import {Input} from "@/components/ui/input";
 
 const formSchema = z.object({
     username: z.string().min(1, {message: "Username is required"}),
     password: z.string().min(1, {message: "Password is required"}),
 });
+type FormType = z.infer<typeof formSchema>;
+
 
 export function SignInForm() {
     const {login} = useAuth();
@@ -29,10 +31,10 @@ export function SignInForm() {
         defaultValues: {
             username: "",
             password: "",
-        },
+        }
     });
 
-    const onSubmit = async (values) => {
+    const onSubmit = async (values: FormType) => {
         setIsLoading(true);
         setError('');
 
@@ -40,6 +42,7 @@ export function SignInForm() {
             await login(values.username, values.password);
             router.push('/'); // Redirect to dashboard after login
         } catch (error) {
+            // @ts-expect-error dkdkdk
             setError(error.message || 'Invalid username or password');
         } finally {
             setIsLoading(false);
@@ -88,10 +91,12 @@ export function SignInForm() {
                         name="password"
                         render={({field}) => (
                             <FormItem>
+
                                 <FormLabel>Password</FormLabel>
                                 <FormControl>
                                     <Input type="password" placeholder="••••••••" {...field} />
                                 </FormControl>
+
                                 <FormMessage/>
                             </FormItem>
                         )}

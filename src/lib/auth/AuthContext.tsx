@@ -1,7 +1,7 @@
 'use client'
 import {createContext, ReactNode, useContext, useEffect, useState} from 'react';
-import {useRouter} from 'next/navigation'; // Changed from next/router to next/navigation
-import {authService} from '@/lib/auth';
+import {useRouter} from 'next/navigation';
+import {authService} from "@/lib/auth/authService";
 
 interface User {
     isLoggedIn: boolean;
@@ -9,8 +9,8 @@ interface User {
 
 interface AuthContextType {
     user: User | null;
-    login: (username: string, password: string) => Promise<any>;
-    register: (username: string, password: string) => Promise<any>;
+    login: (username: string, password: string) => Promise<void>;
+    register: (username: string, password: string) => Promise<void>;
     logout: () => void;
     loading: boolean;
 }

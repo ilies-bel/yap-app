@@ -1,4 +1,5 @@
-import {api} from "./services/axiosClient.ts";
+"use client"
+import {api} from "../services/axiosClient.ts";
 
 const testServerNotification = async () => {
     const permission = await Notification.requestPermission();
@@ -7,8 +8,6 @@ const testServerNotification = async () => {
         console.log('Permission not granted for notifications');
         return
     }
-
-    // Try using service worker for notification
 
     if (!('serviceWorker' in navigator)) {
         console.log('Service worker not supported');

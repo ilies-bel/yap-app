@@ -2,7 +2,7 @@ import React from "react";
 
 import './global.css'
 import './index.css'
-import {AuthProvider} from "@/context/AuthContext.tsx";
+import WithAuth from "@/lib/auth/WithAuth";
 
 export default function RootLayout(
     {
@@ -17,9 +17,9 @@ export default function RootLayout(
         </head>
         <body>
         <div id="root">
-            <AuthProvider>
+            <WithAuth>
                 {children}
-            </AuthProvider>
+            </WithAuth>
         </div>
         </body>
         </html>

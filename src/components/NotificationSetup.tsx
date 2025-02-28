@@ -1,5 +1,7 @@
+'use client'
 import {useEffect, useState} from 'react';
 import {NotificationService} from '../services/NotificationService';
+
 
 export default function NotificationSetup() {
     const [isSubscribed, setIsSubscribed] = useState(false);
@@ -33,6 +35,7 @@ export default function NotificationSetup() {
                 setIsSubscribed(true);
             } catch (err) {
                 console.error('Notification setup error:', err);
+                // @ts-expect-error dkdkdk
                 setError(err.message);
             }
         };

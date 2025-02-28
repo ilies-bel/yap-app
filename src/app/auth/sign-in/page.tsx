@@ -1,9 +1,9 @@
 "use client"
 
-import {SignInForm} from '@/components/auth/SignInForm.tsx';
-import {useAuth} from '@/context/AuthContext.tsx';
 import {useEffect} from 'react';
 import {useRouter} from "next/navigation";
+import {useAuth} from "@/lib/auth/AuthContext";
+import {SignInForm} from "@/components/auth/SignInForm";
 
 export default function SignInPage() {
     const {user, loading} = useAuth();
@@ -15,7 +15,7 @@ export default function SignInPage() {
         if (!loading && user) {
             router.push('/');
         }
-    }, [user, loading]);
+    }, [user, loading, router]);
 
     // Show loading state or render the form
     if (loading || user) {
