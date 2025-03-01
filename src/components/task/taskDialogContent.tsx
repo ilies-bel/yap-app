@@ -1,42 +1,36 @@
-import {DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle} from "@/components/ui/dialog";
-import {Label} from "@/components/ui/label";
+import {DialogContent, DialogFooter} from "@/components/ui/dialog";
 import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
+import {CommandShortcut} from "@/components/ui/command";
+import {Separator} from "@/components/ui/separator";
+import {Label} from "../ui/label";
+import {DifficultySlider} from "@/components/task/difficultySlider";
+import {ProjectSelect} from "@/components/task/projectSelect";
 
 export function TaskDialogContent() {
     return (
         <DialogContent className="sm:max-w-[425px]">
-            <DialogHeader>
-                <DialogTitle>Edit profile</DialogTitle>
-                <DialogDescription>
-                    Make changes to your profile here. Click save when you're done.
-                </DialogDescription>
-            </DialogHeader>
-            <div className="grid gap-4 py-4">
-                <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="name" className="text-right">
-                        Name
-                    </Label>
-                    <Input
-                        id="name"
-                        defaultValue="Pedro Duarte"
-                        className="col-span-3"
-                    />
+            <Input
+                id="name"
+                placeholder="What needs to be done?"
+                className={"border-0 focus-visible:border-0 focus-visible:ring-0"}
+            />
+            <Separator/>
+            <div className="grid gap-4 p-2">
+                <div className={"flex flex-row space-x-4"}>
+                    <ProjectSelect/>
                 </div>
-                <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="username" className="text-right">
-                        Username
-                    </Label>
-                    <Input
-                        id="username"
-                        defaultValue="@peduarte"
-                        className="col-span-3"
-                    />
+
+                <div className={"flex flex-row space-x-4"}>
+                    <Label>Difficulty</Label>
+                    <DifficultySlider className={"w-full"}/>
                 </div>
             </div>
             <DialogFooter>
-                <Button type="submit">Save changes</Button>
+                <Button type="submit">Save changes <CommandShortcut>⌘ + ⏎</CommandShortcut></Button>
             </DialogFooter>
         </DialogContent>
     )
 }
+
+
