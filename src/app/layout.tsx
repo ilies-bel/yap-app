@@ -1,9 +1,9 @@
 import React from "react";
 
 import './global.css'
-import './index.css'
 import WithAuth from "@/lib/auth/WithAuth";
 import QueryProvider from "@/lib/QueryClientProvider";
+import {ThemeProvider} from "@/components/theme-provider";
 
 export default function RootLayout(
     {
@@ -20,7 +20,14 @@ export default function RootLayout(
         <div id="root">
             <WithAuth>
                 <QueryProvider>
-                    {children}
+                    <ThemeProvider
+                        attribute="class"
+                        defaultTheme="system"
+                        enableSystem
+                        disableTransitionOnChange
+                    >
+                        {children}
+                    </ThemeProvider>
                 </QueryProvider>
             </WithAuth>
         </div>
