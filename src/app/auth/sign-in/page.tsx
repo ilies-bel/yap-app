@@ -2,8 +2,8 @@
 
 import {useEffect} from 'react';
 import {useRouter} from "next/navigation";
-import {useAuth} from "@/lib/auth/AuthContext";
 import {SignInForm} from "@/components/auth/SignInForm";
+import {useAuth} from "@/lib/auth/UseAuth";
 
 export default function SignInPage() {
     const {user, loading} = useAuth();

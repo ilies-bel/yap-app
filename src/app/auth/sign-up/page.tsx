@@ -1,8 +1,8 @@
 "use client"
-import {SignUpForm} from '@/components/auth/SignUpForm.tsx';
-import {useAuth} from '@/lib/auth/AuthContext.tsx';
 import {useEffect} from 'react';
 import {useRouter} from "next/navigation";
+import {useAuth} from "@/lib/auth/UseAuth";
+import {SignUpForm} from "@/components/auth/SignUpForm";
 
 
 export default function SignUpPage() {

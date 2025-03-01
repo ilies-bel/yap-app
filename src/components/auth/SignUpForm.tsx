@@ -8,7 +8,8 @@ import {Button} from '@/components/ui/button';
 import {Input} from '@/components/ui/input';
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {Alert, AlertDescription} from '@/components/ui/alert';
-import {useAuth} from "@/lib/auth/AuthContext";
+
+import {useAuth} from "@/lib/auth/UseAuth";
 
 const formSchema = z.object({
     username: z.string().min(3, {

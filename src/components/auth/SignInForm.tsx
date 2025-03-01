@@ -4,11 +4,11 @@ import {z} from 'zod';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {useRouter, useSearchParams} from 'next/navigation';
 import Link from 'next/link';
-import {useAuth} from "@/lib/auth/AuthContext";
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form";
 import {Button} from "@/components/ui/button";
 import {Alert, AlertDescription} from "@/components/ui/alert";
 import {Input} from "@/components/ui/input";
+import {useAuth} from "@/lib/auth/UseAuth";
 
 const formSchema = z.object({
     username: z.string().min(1, {message: "Username is required"}),
