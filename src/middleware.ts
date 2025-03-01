@@ -1,6 +1,6 @@
 // File: middleware.ts
 import {NextRequest, NextResponse} from 'next/server'
-import {ACCESS_TOKEN} from "@/services/axiosClient";
+import {ACCESS_TOKEN} from "@/services/api/axiosClient";
 
 // 1. Specify protected and public routes
 const publicRoutes = ['/auth/sign-in', '/auth/sign-up']

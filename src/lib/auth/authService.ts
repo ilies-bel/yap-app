@@ -1,5 +1,5 @@
 import Cookies from 'js-cookie';
-import {ACCESS_TOKEN, api} from "@/services/axiosClient";
+import {ACCESS_TOKEN, api} from "@/services/api/axiosClient";
 
 
 // Auth functions

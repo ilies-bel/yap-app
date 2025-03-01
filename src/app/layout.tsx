@@ -3,6 +3,7 @@ import React from "react";
 import './global.css'
 import './index.css'
 import WithAuth from "@/lib/auth/WithAuth";
+import QueryProvider from "@/lib/QueryClientProvider";
 
 export default function RootLayout(
     {
@@ -18,7 +19,9 @@ export default function RootLayout(
         <body>
         <div id="root">
             <WithAuth>
-                {children}
+                <QueryProvider>
+                    {children}
+                </QueryProvider>
             </WithAuth>
         </div>
         </body>

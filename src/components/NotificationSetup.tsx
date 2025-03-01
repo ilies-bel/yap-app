@@ -1,6 +1,6 @@
 'use client'
 import {useEffect, useState} from 'react';
-import {NotificationService} from '../services/NotificationService';
+import {NotificationService} from '../services/notifications/NotificationService';
 
 
 export default function NotificationSetup() {
