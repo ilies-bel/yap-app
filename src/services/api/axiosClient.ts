@@ -15,7 +15,6 @@ export const api = axios.create({
 // Add token to requests if available
 api.interceptors.request.use((config) => {
     const token = Cookies.get(ACCESS_TOKEN);
-    console.log('Token:', token);
     if (token) {
         config.headers.Authorization = `Bearer ${token}`;
     }
