@@ -4,6 +4,7 @@ import './global.css'
 import WithAuth from "@/lib/auth/WithAuth";
 import QueryProvider from "@/lib/QueryClientProvider";
 import {ThemeProvider} from "@/components/theme-provider";
+import ErrorBoundary from "../lib/errorBoundary";
 
 export default function RootLayout(
     {
@@ -26,7 +27,9 @@ export default function RootLayout(
                         enableSystem
                         disableTransitionOnChange
                     >
-                        {children}
+                        <ErrorBoundary>
+                            {children}
+                        </ErrorBoundary>
                     </ThemeProvider>
                 </QueryProvider>
             </WithAuth>

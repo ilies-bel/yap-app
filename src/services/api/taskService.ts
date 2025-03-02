@@ -16,11 +16,11 @@ type Task = z.infer<typeof tasks>
 
 export default function useTasks() {
     return useQuery({
-        queryKey: ['dashboard'],
+        queryKey: ['tasks'],
         queryFn: async (): Promise<Task[]> => {
             const response = await api.get('/tasks')
             return z.array(tasks).parse(response.data)
-        }
+        },
     })
 
 }

@@ -1,17 +1,23 @@
-import {Slider} from "@/components/ui/slider";
 import {cn} from "@/lib/utils";
+import * as React from "react"
+import {SingleValueSlider} from "@/components/task/singleValueSlider";
 
-type SliderProps = React.ComponentProps<typeof Slider>
+type SliderProps = React.ComponentProps<typeof SingleValueSlider>
 
 
 export function DifficultySlider({className, ...props}: SliderProps) {
     return (
-        <Slider
-            defaultValue={[50]}
+        <SingleValueSlider
             max={100}
             step={20}
             className={cn("w-[60%]", className)}
-            {...props}
+            value={props.value}
+            onValueChange={props.onValueChange}
+            onCommitChange={props.onCommitChange}
         />
     )
 }
+
+
+
+

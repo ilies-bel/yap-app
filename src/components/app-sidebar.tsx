@@ -7,6 +7,7 @@ import {
     SidebarMenuItem,
 } from "@/components/ui/sidebar"
 import {Calendar, Home, Inbox, Search, Settings} from "lucide-react";
+import {LogOutSidebarMenuButton} from "@/components/log-out-sidebar-menu-button";
 
 const items = [
     {
@@ -51,13 +52,17 @@ export function AppSidebar() {
             </SidebarContent>
 
             <SidebarFooter className={"p-4"}>
+
                 <SidebarMenuButton asChild>
                     <a href={"/settings"}>
                         <Settings/>
                         <span>Settings</span>
                     </a>
                 </SidebarMenuButton>
+                <LogOutSidebarMenuButton/>
             </SidebarFooter>
         </Sidebar>
     )
 }
+
+

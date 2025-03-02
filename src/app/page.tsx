@@ -1,16 +1,8 @@
-import NotificationSetup from "@/components/NotificationSetup";
-import React from "react";
-import {NotificationTest} from "@/components/NotificationTest";
+import {redirect} from "next/navigation";
 
 function HomePage() {
 
-    return (
-        <>
-            <h1>yet-another-planner</h1>
-            <NotificationSetup/>
-            <NotificationTest/>
-        </>
-    )
+    redirect('/dashboard');
 }
 
 export default HomePage
