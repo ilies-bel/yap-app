@@ -3,15 +3,16 @@
 import {DialogContent, DialogFooter, DialogTitle} from "@/components/ui/dialog";
 import {FormProvider, useForm} from "react-hook-form";
 import {Separator} from "@/components/ui/separator";
-import {TaskDialogItem} from "@/components/task/taskDialogItem";
-import {ProjectSelect} from "@/components/task/projectSelect";
+import {TaskDialogItem} from "@/components/task/new-task/taskDialogItem";
+import {ProjectSelectField} from "@/components/task/new-task/task-form/projectSelectField";
 import {Button} from "@/components/ui/button";
 import {CommandShortcut} from "@/components/ui/command";
 import {zodResolver} from "@hookform/resolvers/zod";
-import {FormType, newTaskFormSchema} from "@/components/task/newTaskFormSchema";
-import {NameField} from "@/components/task/nameField";
-import {DifficultyField} from "@/components/task/difficultyField";
-import {useCreateTask} from "@/components/task/useCreateTask";
+import {FormType, newTaskFormSchema} from "@/components/task/new-task/task-form/newTaskFormSchema";
+import {NameField} from "@/components/task/new-task/task-form/nameField";
+import {DifficultyField} from "@/components/task/new-task/task-form/difficulty/difficultyField";
+
+import {useCreateTask} from "@/services/api/task/useCreateTask";
 
 interface TaskDialogContentProps {
     closeDialog: () => void
@@ -50,7 +51,7 @@ export function TaskDialogContent({closeDialog}: TaskDialogContentProps) {
 
                         <div className="grid gap-4">
                             <TaskDialogItem>
-                                <ProjectSelect/>
+                                <ProjectSelectField/>
                             </TaskDialogItem>
 
                             <TaskDialogItem>

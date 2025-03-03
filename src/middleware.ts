@@ -1,6 +1,6 @@
 // File: middleware.ts
 import {NextRequest, NextResponse} from 'next/server'
-import {ACCESS_TOKEN, tokenService} from "@/services/api/tokenService";
+import {ACCESS_TOKEN} from "@/services/api/tokenService";
 
 const publicRoutes = ['/auth/sign-in', '/auth/sign-up']
 
@@ -9,7 +9,6 @@ export async function middleware(req: NextRequest) {
     const path = req.nextUrl.pathname
     const isPublicRoute = publicRoutes.includes(path)
 
-    console.log("token middleware", tokenService.getToken())
     const token = req.cookies.get(ACCESS_TOKEN)?.value
 
 

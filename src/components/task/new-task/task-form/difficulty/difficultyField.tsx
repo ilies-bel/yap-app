@@ -1,8 +1,8 @@
 import {UseFormReturn} from "react-hook-form";
-import {FormType} from "@/components/task/newTaskFormSchema";
+import {FormType} from "@/components/task/new-task/task-form/newTaskFormSchema";
 import {Label} from "@/components/ui/label";
 import {FormField} from "@/components/ui/form";
-import {DifficultySlider} from "@/components/task/difficultySlider";
+import {DifficultySlider} from "@/components/task/new-task/task-form/difficulty/difficultySlider";
 
 export function DifficultyField({form}: { form: UseFormReturn<FormType> }) {
     return (

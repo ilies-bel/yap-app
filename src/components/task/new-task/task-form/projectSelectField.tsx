@@ -2,7 +2,7 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/c
 import {useFormContext} from "react-hook-form";
 import {FormField} from "@/components/ui/form";
 
-export function ProjectSelect() {
+export function ProjectSelectField() {
     const {control} = useFormContext();
 
     const projects = [{

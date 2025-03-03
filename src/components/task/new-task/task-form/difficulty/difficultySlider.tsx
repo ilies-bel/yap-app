@@ -1,6 +1,6 @@
 import {cn} from "@/lib/utils";
 import * as React from "react"
-import {SingleValueSlider} from "@/components/task/singleValueSlider";
+import {SingleValueSlider} from "@/components/ui/singleValueSlider";
 
 type SliderProps = React.ComponentProps<typeof SingleValueSlider>
 
