@@ -1,8 +1,7 @@
 // File: middleware.ts
 import {NextRequest, NextResponse} from 'next/server'
-import {ACCESS_TOKEN} from "@/services/api/axiosClient";
+import {ACCESS_TOKEN, tokenService} from "@/services/api/tokenService";
 
-// 1. Specify protected and public routes
 const publicRoutes = ['/auth/sign-in', '/auth/sign-up']
 
 
@@ -10,6 +9,7 @@ export async function middleware(req: NextRequest) {
     const path = req.nextUrl.pathname
     const isPublicRoute = publicRoutes.includes(path)
 
+    console.log("token middleware", tokenService.getToken())
     const token = req.cookies.get(ACCESS_TOKEN)?.value
 
 

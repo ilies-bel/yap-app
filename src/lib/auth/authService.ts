@@ -1,5 +1,5 @@
-import Cookies from 'js-cookie';
-import {ACCESS_TOKEN, api} from "@/services/api/axiosClient";
+import {tokenService} from "@/services/api/tokenService";
+import {axiosClient} from "@/services/api/axiosInterceptor";
 
 
 // Auth functions
@@ -7,11 +7,10 @@ export const authService = {
     // Register new user
     register: async (username: string, password: string) => {
         try {
-            const response = await api.post('/auth/register', {username, password});
+            const response = await axiosClient.post('/auth/register', {username, password});
             return response.data;
         } catch (error) {
             // @ts-expect-error dkdkdk
-
             throw error.response?.data || {message: 'Registration failed'};
         }
     },
@@ -19,12 +18,10 @@ export const authService = {
     // Login user
     login: async (username: string, password: string) => {
         try {
-            const response = await api.post('/auth/login', {username, password});
-            const {token} = response.data;
+            const response = await axiosClient.post('/auth/login', {username, password});
+            const {token, expiresIn} = response.data;
 
-            // Save token to cookies (adjust expiry as needed)
-            Cookies.set(ACCESS_TOKEN, token, {expires: 7});
-
+            tokenService.setToken(token, expiresIn)
             return response.data;
         } catch (error) {
             // @ts-expect-error dkdkdk
@@ -33,18 +30,11 @@ export const authService = {
         }
     },
 
-    // Logout user
     logout: () => {
-        Cookies.remove(ACCESS_TOKEN);
+        tokenService.removeToken()
     },
 
-    // Check if user is authenticated
     isAuthenticated: () => {
-        return !!Cookies.get(ACCESS_TOKEN);
+        return tokenService.isTokenValid()
     },
-
-    // Get current token
-    getToken: () => {
-        return Cookies.get(ACCESS_TOKEN);
-    }
 };
