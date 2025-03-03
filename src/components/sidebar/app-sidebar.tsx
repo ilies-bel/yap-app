@@ -7,7 +7,7 @@ import {
     SidebarMenuItem,
 } from "@/components/ui/sidebar"
 import {Calendar, Home, Inbox, Settings} from "lucide-react";
-import {LogOutSidebarMenuButton} from "@/components/log-out-sidebar-menu-button";
+import {LogOutSidebarMenuButton} from "@/components/sidebar/log-out-sidebar-menu-button";
 
 const items = [
     {
