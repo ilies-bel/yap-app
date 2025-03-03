@@ -15,7 +15,7 @@ export function NewTaskButton() {
     return (
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
             <DialogTrigger asChild>
-                <Button variant="outline">New task</Button>
+                <Button>New task</Button>
             </DialogTrigger>
             <TaskDialogContent closeDialog={() => setIsOpen(false)}/>
         </Dialog>

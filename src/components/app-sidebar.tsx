@@ -6,7 +6,7 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import {Calendar, Home, Inbox, Search, Settings} from "lucide-react";
+import {Calendar, Home, Inbox, Settings} from "lucide-react";
 import {LogOutSidebarMenuButton} from "@/components/log-out-sidebar-menu-button";
 
 const items = [
@@ -21,14 +21,9 @@ const items = [
         icon: Inbox,
     },
     {
-        title: "Calendar",
+        title: "Next actions",
         url: "#",
         icon: Calendar,
-    },
-    {
-        title: "Search",
-        url: "#",
-        icon: Search,
     }
 ]
 

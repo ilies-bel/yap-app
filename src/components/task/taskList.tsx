@@ -1,4 +1,5 @@
 import useTasks from "@/services/api/taskService";
+import {Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table";
 
 
 export function TaskList() {
@@ -9,13 +10,27 @@ export function TaskList() {
     }
 
     return (
-        data.map(task => (
-            <div key={task.id}>
-                <h2>{task.name}</h2>
-                <p>{task.description}</p>
-                <p>{task.dueDate}</p>
-                <p>{task.status}</p>
-            </div>
-        ))
+        <Table>
+            <TableCaption>
+                Todo
+            </TableCaption>
+            <TableHeader>
+                <TableRow>
+                    <TableHead>Name</TableHead>
+                </TableRow>
+            </TableHeader>
+            <TableBody>
+                {data.map(task => (
+                    <TableRow key={task.id}>
+                        <TableCell>
+                            {task.name}
+                        </TableCell>
+                        <TableCell className={"flex justify-end"}>
+                            {task.status}
+                        </TableCell>
+                    </TableRow>
+                ))}
+            </TableBody>
+        </Table>
     )
 }

@@ -6,9 +6,9 @@ import {axiosClient} from "@/services/api/axiosInterceptor";
 const tasks = z.object({
     id: z.number(),
     name: z.string(),
-    description: z.string().nullish(),
-    dueDate: z.string().nullish(),
-    status: z.string().nullish(),
+    description: z.string().nullable(),
+    dueDate: z.string().nullable(),
+    status: z.string().nullable(),
 })
 
 type Task = z.infer<typeof tasks>

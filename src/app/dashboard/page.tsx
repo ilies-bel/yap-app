@@ -6,7 +6,9 @@ import {TaskList} from "@/components/task/taskList";
 export default function Page() {
     return (
         <div>
+
             <NewTaskButton/>
+
             <TaskList/>
         </div>
     )
