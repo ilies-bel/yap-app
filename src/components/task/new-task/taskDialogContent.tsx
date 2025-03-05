@@ -50,6 +50,7 @@ export function TaskDialogContent({closeDialog}: TaskDialogContentProps) {
 
 
                         <div className="grid gap-4">
+
                             <TaskDialogItem>
                                 <ProjectSelectField/>
                             </TaskDialogItem>
