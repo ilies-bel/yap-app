@@ -9,7 +9,7 @@ export default function Page() {
     return (
         <div className={"flex flex-col space-y-4"}>
             <div>
-                <NewTaskButton/>
+                <NewTaskButton hideBody={false}/>
             </div>
             <div>
                 <UnderlinedWordsInput

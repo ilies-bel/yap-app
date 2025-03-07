@@ -16,9 +16,10 @@ import {useCreateTask} from "@/services/api/task/useCreateTask";
 
 interface TaskDialogContentProps {
     closeDialog: () => void
+    hideBody: boolean
 }
 
-export function TaskDialogContent({closeDialog}: TaskDialogContentProps) {
+export function TaskDialogContent({closeDialog, hideBody}: TaskDialogContentProps) {
 
     const form = useForm<FormType>({
         resolver: zodResolver(newTaskFormSchema),
@@ -46,11 +47,10 @@ export function TaskDialogContent({closeDialog}: TaskDialogContentProps) {
                         <DialogTitle>
                             <NameField form={form}/>
                         </DialogTitle>
+
                         <Separator/>
 
-
-                        <div className="grid gap-4">
-
+                        <div className="grid gap-4" hidden={hideBody}>
                             <TaskDialogItem>
                                 <ProjectSelectField/>
                             </TaskDialogItem>

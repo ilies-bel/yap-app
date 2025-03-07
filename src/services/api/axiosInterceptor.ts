@@ -1,5 +1,6 @@
 import axios from "axios";
 import {tokenService} from "@/services/api/tokenService";
+import qs from "qs";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
 
@@ -8,6 +9,8 @@ export const axiosClient = axios.create({
     headers: {
         'Content-Type': 'application/json',
     },
+    paramsSerializer: (params: unknown) =>
+        qs.stringify(params, { arrayFormat: "repeat" }),
 });
 
 export async function refreshTokenFromApi() {

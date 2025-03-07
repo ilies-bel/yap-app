@@ -1,9 +1,15 @@
+"use client"
 import useTasks from "@/services/api/task/taskService";
 import {Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table";
+import {Status} from "@/services/api/status";
 
 
-export function TaskList() {
-    const {data} = useTasks()
+interface TaskListProps {
+    filters?: { status: Status[] }
+}
+
+export function TaskList({filters}: TaskListProps) {
+    const {data} = useTasks(filters)
 
     if (!data) {
         return <div>Loading...</div>
