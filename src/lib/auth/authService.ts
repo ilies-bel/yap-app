@@ -5,9 +5,9 @@ import {axiosClient} from "@/services/api/axiosInterceptor";
 // Auth functions
 export const authService = {
     // Register new user
-    register: async (username: string, password: string) => {
+    register: async (email: string, password: string) => {
         try {
-            const response = await axiosClient.post('/auth/register', {username, password});
+            const response = await axiosClient.post('/auth/register', {email, password});
             return response.data;
         } catch (error) {
             // @ts-expect-error dkdkdk
@@ -16,9 +16,9 @@ export const authService = {
     },
 
     // Login user
-    login: async (username: string, password: string) => {
+    login: async (email: string, password: string) => {
         try {
-            const response = await axiosClient.post('/auth/login', {username, password});
+            const response = await axiosClient.post('/auth/login', {email, password});
             const {token, expiresIn} = response.data;
 
             tokenService.setToken(token, expiresIn)

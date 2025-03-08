@@ -12,12 +12,12 @@ import {LogOutSidebarMenuButton} from "@/components/sidebar/log-out-sidebar-menu
 const items = [
     {
         title: "Home",
-        url: "#",
+        url: "/dashboard",
         icon: Home,
     },
     {
         title: "Inbox",
-        url: "#",
+        url: "/dashboard/inbox",
         icon: Inbox,
     },
     {

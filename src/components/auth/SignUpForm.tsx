@@ -12,9 +12,7 @@ import {Alert, AlertDescription} from '@/components/ui/alert';
 import {useAuth} from "@/lib/auth/UseAuth";
 
 const formSchema = z.object({
-    username: z.string().min(3, {
-        message: "Username must be at least 3 characters.",
-    }),
+    email: z.string().email(),
     password: z.string().min(6, {
         message: "Password must be at least 6 characters.",
     }),
@@ -35,7 +33,7 @@ export function SignUpForm() {
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            username: "",
+            email: "",
             password: "",
             confirmPassword: ""
         },
@@ -46,7 +44,7 @@ export function SignUpForm() {
         setError('');
 
         try {
-            await register(values.username, values.password);
+            await register(values.email, values.password);
             router.push('/auth/sign-in?registered=true');
         } catch (error) {
             // @ts-expect-error dkdkdk
@@ -73,12 +71,12 @@ export function SignUpForm() {
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
                     <FormField
                         control={form.control}
-                        name="username"
+                        name="email"
                         render={({field}) => (
                             <FormItem>
-                                <FormLabel>Username</FormLabel>
+                                <FormLabel>Email</FormLabel>
                                 <FormControl>
-                                    <Input placeholder="username" {...field} />
+                                    <Input placeholder="email" type={"email"} {...field} />
                                 </FormControl>
                                 <FormMessage/>
                             </FormItem>
