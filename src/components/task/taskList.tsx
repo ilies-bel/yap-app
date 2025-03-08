@@ -2,6 +2,7 @@
 import useTasks from "@/services/api/task/taskService";
 import {Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table";
 import {Status} from "@/services/api/status";
+import {RowsWithSkeleton} from "@/components/task/rowsWithSkeleton";
 
 
 interface TaskListProps {
@@ -11,9 +12,6 @@ interface TaskListProps {
 export function TaskList({filters}: TaskListProps) {
     const {data} = useTasks(filters)
 
-    if (!data) {
-        return <div>Loading...</div>
-    }
 
     return (
         <Table>
@@ -26,17 +24,22 @@ export function TaskList({filters}: TaskListProps) {
                 </TableRow>
             </TableHeader>
             <TableBody>
-                {data.map(task => (
-                    <TableRow key={task.id}>
-                        <TableCell>
-                            {task.name}
-                        </TableCell>
-                        <TableCell className={"flex justify-end"}>
-                            {task.status}
-                        </TableCell>
-                    </TableRow>
-                ))}
+                <RowsWithSkeleton loading={!data}>
+                    {data?.map(task => (
+                        <TableRow key={task.id}>
+                            <TableCell>
+                                {task.name}
+                            </TableCell>
+                            <TableCell className={"flex justify-end"}>
+                                {task.status}
+                            </TableCell>
+                        </TableRow>
+                    ))}
+                </RowsWithSkeleton>
             </TableBody>
         </Table>
     )
 }
+
+
+
