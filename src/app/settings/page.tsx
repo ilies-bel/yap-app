@@ -6,8 +6,6 @@ import {UserForm} from "@/app/settings/userForm";
 import {DeviceForm} from "@/app/settings/deviceForm";
 
 function SettingsPage() {
-
-
     return (
         <div>
             <section className={"grid gap-2 grid-cols-2 pb-4"}>
