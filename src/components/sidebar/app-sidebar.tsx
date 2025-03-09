@@ -22,7 +22,7 @@ const items = [
     },
     {
         title: "Next actions",
-        url: "#",
+        url: "/dashboard/next-actions",
         icon: Calendar,
     }
 ]

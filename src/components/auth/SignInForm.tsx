@@ -9,6 +9,7 @@ import {Button} from "@/components/ui/button";
 import {Alert, AlertDescription} from "@/components/ui/alert";
 import {Input} from "@/components/ui/input";
 import {useAuth} from "@/lib/auth/UseAuth";
+import {deviceService} from "@/services/device/deviceService";
 
 const formSchema = z.object({
     username: z.string().min(1, {message: "Username is required"}),
@@ -41,6 +42,8 @@ export function SignInForm() {
         try {
             await login(values.username, values.password);
             router.push('/'); // Redirect to dashboard after login
+
+            deviceService.generateDeviceId()
         } catch (error) {
             // @ts-expect-error dkdkdk
             setError(error.message || 'Invalid username or password');

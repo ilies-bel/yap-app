@@ -10,7 +10,10 @@ export default function InboxPage() {
                 <NewTaskButton hideBody={true}/>
             </div>
             <TaskList filters={{
-                status: [Status.TO_REFINE, Status.SOMEDAY],
+                status: [Status.TO_REFINE],
+            }}/>
+            <TaskList filters={{
+                status: [Status.SOMEDAY],
             }}/>
         </div>
 

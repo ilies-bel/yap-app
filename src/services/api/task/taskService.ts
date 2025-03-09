@@ -17,7 +17,7 @@ type Task = z.infer<typeof tasks>
 
 export default function useTasks(filters?: { status: Status[]; }) {
     return useQuery({
-        queryKey: ['tasks'],
+        queryKey: ['tasks', filters],
         queryFn: async (): Promise<Task[]> => {
             const response = await axiosClient.get('/tasks', {
                 params: filters,
@@ -26,5 +26,4 @@ export default function useTasks(filters?: { status: Status[]; }) {
         },
         throwOnError: true,
     })
-
 }

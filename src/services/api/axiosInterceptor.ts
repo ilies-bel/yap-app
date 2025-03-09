@@ -1,6 +1,7 @@
 import axios from "axios";
 import {tokenService} from "@/services/api/tokenService";
 import qs from "qs";
+import {deviceService} from "@/services/device/deviceService";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
 
@@ -10,7 +11,7 @@ export const axiosClient = axios.create({
         'Content-Type': 'application/json',
     },
     paramsSerializer: (params: unknown) =>
-        qs.stringify(params, { arrayFormat: "repeat" }),
+        qs.stringify(params, {arrayFormat: "repeat"}),
 });
 
 export async function refreshTokenFromApi() {
@@ -63,5 +64,6 @@ axiosClient.interceptors.request.use(async (config) => {
     }
 
     config.headers.Authorization = `Bearer ${tokenService.getToken()}`;
+    config.headers["X-Device"] = `${deviceService.getDeviceId()}`;
     return config;
 });
