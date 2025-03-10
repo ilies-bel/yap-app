@@ -1,5 +1,6 @@
 import {useEffect} from "react";
 import {TypingEffectActions, useTypingEffect} from "@/components/chat/useTypingEffect";
+import Markdown from 'react-markdown'
 
 type TypingEffectProps = {
     text: string;
@@ -36,8 +37,8 @@ function TypingEffect({text, typingSpeed = 50, delay = 500, onComplete}: TypingE
 
     return (
         <div className="typing-effect">
-            <p className="message">
-                {state.displayedText}
+            <p className="message flex">
+                <Markdown>{state.displayedText}</Markdown>
                 {state.isTyping && <span className="cursor">|</span>}
             </p>
 
