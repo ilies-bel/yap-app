@@ -3,7 +3,7 @@ import {TaskList} from "@/components/task/taskList";
 import {Status} from "@/services/api/status"
 import {NewTaskButton} from "@/components/task/new-task/newTaskButton";
 import {useQuery} from "@tanstack/react-query";
-import {axiosClient} from "@/services/api/axiosInterceptor";
+import {axiosClient} from "@/services/api/apiClient";
 
 function useCurrentContext() {
     return useQuery({

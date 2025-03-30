@@ -1,5 +1,5 @@
 import {tokenService} from "@/services/api/tokenService";
-import {axiosClient} from "@/services/api/axiosInterceptor";
+import {axiosClient} from "@/services/api/apiClient";
 
 
 // Auth functions

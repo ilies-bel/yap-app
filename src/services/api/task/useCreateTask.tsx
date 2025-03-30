@@ -1,6 +1,6 @@
 import {useMutation} from "@tanstack/react-query";
 import {FormType} from "@/components/task/new-task/task-form/newTaskFormSchema";
-import {axiosClient} from "@/services/api/axiosInterceptor";
+import {axiosClient} from "@/services/api/apiClient";
 
 
 export const useCreateTask = (onSuccess: () => void) => {

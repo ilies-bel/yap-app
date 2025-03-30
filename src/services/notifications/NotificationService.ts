@@ -1,7 +1,7 @@
 // 2. Create a notification service (src/services/NotificationService.js)
 
 import {urlBase64ToUint8Array} from "@/services/notifications/UrlBase64ToUint8Array";
-import {axiosClient} from "@/services/api/axiosInterceptor";
+import {axiosClient} from "@/services/api/apiClient";
 
 
 export class NotificationService {

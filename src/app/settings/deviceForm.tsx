@@ -1,5 +1,5 @@
 "use client"
-import {axiosClient} from "@/services/api/axiosInterceptor";
+import {axiosClient} from "@/services/api/apiClient";
 import {Button} from "@/components/ui/button";
 import React from "react";
 

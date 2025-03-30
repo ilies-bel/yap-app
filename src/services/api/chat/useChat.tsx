@@ -1,5 +1,5 @@
 import {useQuery} from "@tanstack/react-query";
-import {axiosClient} from "@/services/api/axiosInterceptor";
+import {axiosClient} from "@/services/api/apiClient";
 import {z} from "zod";
 
 export const chatSchema = z.object({

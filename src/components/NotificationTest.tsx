@@ -1,6 +1,6 @@
 "use client"
 
-import {axiosClient} from "@/services/api/axiosInterceptor";
+import {axiosClient} from "@/services/api/apiClient";
 
 const testServerNotification = async () => {
     const permission = await Notification.requestPermission();

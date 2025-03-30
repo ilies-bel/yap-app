@@ -1,8 +1,8 @@
 "use client"
 import React from "react";
-import {axiosClient} from "@/services/api/axiosInterceptor";
 import {Label} from "@/components/ui/label";
 import {Input} from "@/components/ui/input";
+import {axiosClient} from "@/services/api/apiClient";
 
 export function UserForm() {
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {

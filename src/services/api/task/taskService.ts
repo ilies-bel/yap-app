@@ -1,6 +1,6 @@
 import {z} from "zod";
 import {useQuery} from "@tanstack/react-query";
-import {axiosClient} from "@/services/api/axiosInterceptor";
+import {axiosClient} from "@/services/api/apiClient";
 import {Status} from "@/services/api/status";
 
 
