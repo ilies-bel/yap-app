@@ -7,6 +7,7 @@ import {StatusBadge} from "@/components/ui/status-badge";
 import {TaskDetailCard} from "@/components/task/task-detail/taskDetailCard";
 import {TaskStatusDropdown} from "@/components/task/task-status/taskStatusDropdown";
 import {TaskTitle} from "@/components/task/task-title/taskTitle";
+import {TaskContextDropdown} from "@/components/task/task-context/taskContextDropdown";
 import {useMemo, useState} from "react";
 import {useInView} from "react-intersection-observer";
 
@@ -15,6 +16,7 @@ interface TaskListProps {
     filters?: {
         status?: Status[]
         size?: number
+        contextId?: number
     }
 }
 
@@ -60,6 +62,7 @@ export function TaskList({filters}: TaskListProps) {
                     <TableRow>
                         <TableHead className="w-12"></TableHead>
                         <TableHead>Name</TableHead>
+                        <TableHead>Context</TableHead>
                         <TableHead>Status</TableHead>
                     </TableRow>
                 </TableHeader>
@@ -76,6 +79,9 @@ export function TaskList({filters}: TaskListProps) {
                                 </TableCell>
                                 <TableCell className="max-w-0" style={{maxWidth: '300px'}}>
                                     <TaskTitle title={task.name}/>
+                                </TableCell>
+                                <TableCell>
+                                    <TaskContextDropdown task={task}/>
                                 </TableCell>
                                 <TableCell className={"flex justify-end"}>
                                     <StatusBadge status={task.status}/>

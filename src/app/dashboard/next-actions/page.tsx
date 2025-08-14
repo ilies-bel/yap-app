@@ -2,28 +2,23 @@
 import {TaskList} from "@/components/task/taskList";
 import {Status} from "@/services/api/status"
 import {NewTaskButton} from "@/components/task/new-task/newTaskButton";
-import {useQuery} from "@tanstack/react-query";
-import {axiosClient} from "@/services/api/apiClient";
-
-function useCurrentContext() {
-    return useQuery({
-        queryKey: ['contexts'],
-        queryFn: async () => {
-            return axiosClient.get('/contexts/current')
-        }
-    })
-}
+import {CurrentContexts} from "@/app/dashboard/currentContexts";
+import {useCurrentContexts} from "@/services/api/context/useCurrentContexts";
 
 export default function NextActionsPage() {
-    const {data} = useCurrentContext();
+    const {data: contexts} = useCurrentContexts();
 
     return (
         <div>
-            <div>
+            <CurrentContexts/>
+
+            <div className={"p-2"}>
                 <NewTaskButton hideBody={false}/>
             </div>
+
             <TaskList filters={{
                 status: [Status.TODO],
+                contextId: contexts?.deviceContext?.id
             }}/>
         </div>
 

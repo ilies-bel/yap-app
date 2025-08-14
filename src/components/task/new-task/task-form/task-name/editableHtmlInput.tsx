@@ -47,7 +47,7 @@ export function EditableHtmlInput({textTransformer, inputProps}: {
                     textOverflow: 'ellipsis',
                     pointerEvents: 'auto'
                 }}
-                dangerouslySetInnerHTML={{__html: textTransformer(text)}}
+                dangerouslySetInnerHTML={{__html: textTransformer(text || '')}}
             />
         </div>
     )
