@@ -30,13 +30,23 @@ export function TaskDialogContent({closeDialog, hideBody}: TaskDialogContentProp
     });
 
     const {createTask} = useCreateTask(closeDialog);
+    
+    const difficultyScore = form.watch('difficultyScore') || 50;
+    
+    // Calculate red intensity based on difficulty (0-100 -> 0-255)
+    const redIntensity = Math.round((difficultyScore / 100) * 255);
+    const borderColor = `rgb(${redIntensity}, ${Math.max(0, 255 - redIntensity)}, ${Math.max(0, 255 - redIntensity)})`;
 
     const onSubmit = async (values: FormType) => {
         createTask(values)
     };
 
     return (
-        <DialogContent className="sm:max-w-[425px]" aria-describedby="task-dialog-description">
+        <DialogContent 
+            className="sm:max-w-[425px]" 
+            aria-describedby="task-dialog-description"
+            style={{ borderColor, borderWidth: '2px' }}
+        >
             <FormProvider {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)}>
                     <div className={"space-y-4"}>

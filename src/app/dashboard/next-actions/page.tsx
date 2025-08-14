@@ -20,7 +20,7 @@ export default function NextActionsPage() {
     return (
         <div>
             <div>
-                <NewTaskButton hideBody={true}/>
+                <NewTaskButton hideBody={false}/>
             </div>
             <TaskList filters={{
                 status: [Status.TODO],

@@ -15,7 +15,7 @@ export function EditableHtmlInput({textTransformer, inputProps}: {
     };
 
     return (
-        <div className="relative" style={{height: '30px'}}>
+        <div className="relative" style={{height: '30px', maxWidth: '300px'}}>
             <input
                 {...inputProps}
                 spellCheck={"false"}

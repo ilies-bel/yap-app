@@ -1,3 +1,5 @@
+import { z } from "zod"
+
 export enum Status {
     TO_REFINE = "TO_REFINE",
     SOMEDAY = "SOMEDAY",
@@ -5,3 +7,5 @@ export enum Status {
     IN_PROGRESS = "IN_PROGRESS",
     DONE = "DONE",
 }
+
+export const StatusSchema = z.nativeEnum(Status)
