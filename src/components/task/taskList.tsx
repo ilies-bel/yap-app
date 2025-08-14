@@ -5,6 +5,8 @@ import {Status} from "@/services/api/status";
 import {RowsWithSkeleton} from "@/components/task/rowsWithSkeleton";
 import {StatusBadge} from "@/components/ui/status-badge";
 import {TaskDetailCard} from "@/components/task/task-detail/taskDetailCard";
+import {TaskStatusDropdown} from "@/components/task/task-status/taskStatusDropdown";
+import {TaskTitle} from "@/components/task/task-title/taskTitle";
 import {useState} from "react";
 
 
@@ -33,7 +35,9 @@ export function TaskList({filters}: TaskListProps) {
                 </TableCaption>
                 <TableHeader>
                     <TableRow>
+                        <TableHead className="w-12"></TableHead>
                         <TableHead>Name</TableHead>
+                        <TableHead>Status</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -41,13 +45,14 @@ export function TaskList({filters}: TaskListProps) {
                         {data?.map(task => (
                             <TableRow
                                 key={task.id}
-                                className="cursor-pointer hover:bg-gray-50"
+                                className="cursor-pointer hover:bg-slate-50/30"
                                 onClick={() => handleTaskClick(task)}
                             >
-                                <TableCell className="max-w-0 truncate" style={{maxWidth: '300px'}}>
-                                    <div className="truncate">
-                                        {task.name}
-                                    </div>
+                                <TableCell className="w-12">
+                                    <TaskStatusDropdown task={task} />
+                                </TableCell>
+                                <TableCell className="max-w-0" style={{maxWidth: '300px'}}>
+                                    <TaskTitle title={task.name} />
                                 </TableCell>
                                 <TableCell className={"flex justify-end"}>
                                     <StatusBadge status={task.status}/>
