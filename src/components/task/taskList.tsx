@@ -35,7 +35,7 @@ export function TaskList({filters}: TaskListProps) {
     }, [data])
 
     // Intersection observer for infinite scroll
-    const {ref, inView} = useInView({
+    useInView({
         threshold: 0,
         onChange: (inView) => {
             if (inView && hasNextPage && !isFetchingNextPage) {
