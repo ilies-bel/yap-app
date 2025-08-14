@@ -11,12 +11,18 @@ import {useState} from "react";
 
 
 interface TaskListProps {
-    filters?: { status: Status[] }
+    filters?: { 
+        status?: Status[]
+        page?: number
+        size?: number
+    }
 }
 
 export function TaskList({filters}: TaskListProps) {
-    const {data} = useTasks(filters)
+    const {data: taskPage} = useTasks(filters)
     const [selectedTask, setSelectedTask] = useState<Task | null>(null)
+    
+    const tasks = taskPage?.content || []
 
     const handleTaskClick = (task: Task) => {
         setSelectedTask(task)
@@ -41,8 +47,8 @@ export function TaskList({filters}: TaskListProps) {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    <RowsWithSkeleton loading={!data}>
-                        {data?.map(task => (
+                    <RowsWithSkeleton loading={!taskPage}>
+                        {tasks.map(task => (
                             <TableRow
                                 key={task.id}
                                 className="cursor-pointer hover:bg-slate-50/30"

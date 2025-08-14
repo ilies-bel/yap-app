@@ -5,14 +5,18 @@ import {StatusBadge} from "@/components/ui/status-badge"
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card"
 import {CalendarIcon, FileTextIcon} from "lucide-react"
 import {Status} from "@/services/api/status"
+import {Difficulty} from "@/services/api/difficulty"
 import {TaskTitle} from "@/components/task/task-title/taskTitle"
 
 interface Task {
     id: number
     name: string
     description: string | null
-    dueDate: string | null
     status: Status
+    difficulty: Difficulty
+    context: string | null
+    projectName: string | null
+    dueDate: string | null
 }
 
 interface TaskDetailCardProps {
