@@ -19,7 +19,6 @@ export function useDevices() {
             const response = await axiosClient.get('/users/current/devices')
             return z.array(deviceSchema).parse(response.data)
         },
-        throwOnError: true,
     })
 }
 
@@ -36,6 +35,5 @@ export function useAddDevice() {
         onSuccess: () => {
             queryClient.invalidateQueries({queryKey: ['devices']})
         },
-        throwOnError: true,
     })
 }

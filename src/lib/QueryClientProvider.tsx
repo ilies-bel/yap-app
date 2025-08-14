@@ -5,6 +5,16 @@ import {ReactQueryDevtools} from '@tanstack/react-query-devtools'
 
 
 const queryClient = new QueryClient({
+    defaultOptions: {
+        queries: {
+            retry: false,
+            throwOnError: true,
+        },
+        mutations: {
+            retry: false,
+            throwOnError: true,
+        }
+    },
     queryCache: new QueryCache({
         onError: async (error: Error) => {
             console.error('error', error)

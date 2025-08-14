@@ -19,6 +19,5 @@ export function useUpdateTaskStatus() {
             // Invalidate and refetch tasks query
             queryClient.invalidateQueries({queryKey: ['tasks']})
         },
-        throwOnError: true,
     })
 }

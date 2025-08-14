@@ -45,6 +45,5 @@ export default function useTasks(filters?: TaskPageFilter) {
             return hasNextPage ? page.number + 1 : undefined
         },
         initialPageParam: 0,
-        throwOnError: true,
     })
 }
