@@ -1,5 +1,5 @@
 import {z} from "zod";
-import {useQuery} from "@tanstack/react-query";
+import {useInfiniteQuery} from "@tanstack/react-query";
 import {axiosClient} from "@/services/api/apiClient";
 import {Status, StatusSchema} from "@/services/api/status";
 import {Difficulty, DifficultySchema} from "@/services/api/difficulty";
@@ -24,22 +24,27 @@ const taskPageSchema = createPageSchema(taskSchema)
 
 interface TaskPageFilter {
     status?: Status[]
-    page?: number
     size?: number
 }
 
 export default function useTasks(filters?: TaskPageFilter) {
-    return useQuery({
+    return useInfiniteQuery({
         queryKey: ['tasks', filters],
-        queryFn: async (): Promise<PageImpl<Task>> => {
+        queryFn: async ({ pageParam = 0 }): Promise<PageImpl<Task>> => {
             const params = {
                 status: filters?.status,
-                page: filters?.page ?? 0,
+                page: pageParam,
                 size: filters?.size ?? 20
             }
             const response = await axiosClient.get('/tasks', { params })
             return taskPageSchema.parse(response.data)
         },
+        getNextPageParam: (lastPage) => {
+            const { page } = lastPage
+            const hasNextPage = page.number + 1 < page.totalPages
+            return hasNextPage ? page.number + 1 : undefined
+        },
+        initialPageParam: 0,
         throwOnError: true,
     })
 }

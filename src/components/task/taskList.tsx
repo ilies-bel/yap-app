@@ -7,22 +7,42 @@ import {StatusBadge} from "@/components/ui/status-badge";
 import {TaskDetailCard} from "@/components/task/task-detail/taskDetailCard";
 import {TaskStatusDropdown} from "@/components/task/task-status/taskStatusDropdown";
 import {TaskTitle} from "@/components/task/task-title/taskTitle";
-import {useState} from "react";
+import {useMemo, useState} from "react";
+import {useInView} from "react-intersection-observer";
 
 
 interface TaskListProps {
-    filters?: { 
+    filters?: {
         status?: Status[]
-        page?: number
         size?: number
     }
 }
 
 export function TaskList({filters}: TaskListProps) {
-    const {data: taskPage} = useTasks(filters)
+    const {
+        data,
+        fetchNextPage,
+        hasNextPage,
+        isFetchingNextPage,
+        isLoading
+    } = useTasks(filters)
+
     const [selectedTask, setSelectedTask] = useState<Task | null>(null)
-    
-    const tasks = taskPage?.content || []
+
+    // Flatten all pages into a single array of tasks
+    const tasks = useMemo(() => {
+        return data?.pages.flatMap(page => page.content) ?? []
+    }, [data])
+
+    // Intersection observer for infinite scroll
+    const {ref, inView} = useInView({
+        threshold: 0,
+        onChange: (inView) => {
+            if (inView && hasNextPage && !isFetchingNextPage) {
+                fetchNextPage()
+            }
+        }
+    })
 
     const handleTaskClick = (task: Task) => {
         setSelectedTask(task)
@@ -47,7 +67,7 @@ export function TaskList({filters}: TaskListProps) {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    <RowsWithSkeleton loading={!taskPage}>
+                    <RowsWithSkeleton loading={isLoading}>
                         {tasks.map(task => (
                             <TableRow
                                 key={task.id}
@@ -55,10 +75,10 @@ export function TaskList({filters}: TaskListProps) {
                                 onClick={() => handleTaskClick(task)}
                             >
                                 <TableCell className="w-12">
-                                    <TaskStatusDropdown task={task} />
+                                    <TaskStatusDropdown task={task}/>
                                 </TableCell>
                                 <TableCell className="max-w-0" style={{maxWidth: '300px'}}>
-                                    <TaskTitle title={task.name} />
+                                    <TaskTitle title={task.name}/>
                                 </TableCell>
                                 <TableCell className={"flex justify-end"}>
                                     <StatusBadge status={task.status}/>
