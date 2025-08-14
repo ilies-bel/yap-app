@@ -27,7 +27,7 @@ export function useCurrentContexts() {
     return useQuery({
         queryKey: ['contexts'],
         queryFn: async () => {
-            const res = await axiosClient.get('/contexts/current')
+            const res = await axiosClient.get('/users/me/contexts')
             return contextsSchema.parse(res.data)
         },
     });

@@ -1,6 +1,6 @@
 "use client"
 import useTasks, {Task} from "@/services/api/task/taskService";
-import {Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table";
+import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table";
 import {Status} from "@/services/api/status";
 import {RowsWithSkeleton} from "@/components/task/rowsWithSkeleton";
 import {StatusBadge} from "@/components/ui/status-badge";
@@ -56,9 +56,6 @@ export function TaskList({filters}: TaskListProps) {
     return (
         <>
             <Table>
-                <TableCaption>
-                    Todo
-                </TableCaption>
                 <TableHeader>
                     <TableRow>
                         <TableHead className="w-12"></TableHead>

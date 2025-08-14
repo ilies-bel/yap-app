@@ -3,7 +3,7 @@
 import {Select, SelectContent, SelectItem, SelectTrigger} from "@/components/ui/select"
 import {Status} from "@/services/api/status"
 import {useUpdateTaskStatus} from "@/services/api/task/useUpdateTaskStatus"
-import {MoreVerticalIcon} from "lucide-react"
+import {Edit3Icon} from "lucide-react"
 import {Task} from "@/services/api/task/taskService"
 
 interface TaskStatusDropdownProps {
@@ -35,8 +35,8 @@ export function TaskStatusDropdown({task}: TaskStatusDropdownProps) {
     return (
         <div onClick={handleClick}>
             <Select value={task.status} onValueChange={handleStatusChange}>
-                <SelectTrigger className="w-8 h-8 p-0 border-none bg-transparent hover:bg-gray-100 rounded-full">
-                    <MoreVerticalIcon className="h-4 w-4"/>
+                <SelectTrigger className="w-6 h-6 p-0 border-none bg-transparent hover:bg-gray-100 rounded">
+                    <Edit3Icon className="h-4 w-4 text-gray-600"/>
                 </SelectTrigger>
                 <SelectContent>
                     {Object.entries(statusLabels).map(([status, label]) => (
