@@ -9,7 +9,7 @@ interface BotChatBoxProps {
     setIsTyping: Dispatch<SetStateAction<boolean>>
 }
 
-export function BotChatBox({setIsTyping}: BotChatBoxProps) {
+export function ChatbotBox({setIsTyping}: BotChatBoxProps) {
 
     const {data} = useChat();
 

@@ -1,6 +1,6 @@
 "use client"
 import BotAvatar from "@/components/chat/botAvatar";
-import {BotChatBox} from "@/components/chat/botChatBox";
+import {ChatbotBox} from "@/components/chat/chatbotBox";
 import {useState} from "react";
 
 
@@ -10,7 +10,7 @@ export function Chat() {
     return (
         <div className={"grid grid-cols-12 gap-2 "}>
             <span className={"col-span-10"}>
-                <BotChatBox setIsTyping={setIsTyping}/>
+                <ChatbotBox setIsTyping={setIsTyping}/>
             </span>
             <span className="col-span-2 flex items-center justify-center h-20">
                 <BotAvatar active={isTyping}/>
