@@ -18,9 +18,10 @@ interface TaskListProps {
         size?: number
         contextId?: number
     }
+    hideStatusColumn?: boolean
 }
 
-export function TaskList({filters}: TaskListProps) {
+export function TaskList({filters, hideStatusColumn = false}: TaskListProps) {
     const {
         data,
         fetchNextPage,
@@ -63,7 +64,7 @@ export function TaskList({filters}: TaskListProps) {
                         <TableHead className="w-12"></TableHead>
                         <TableHead>Name</TableHead>
                         <TableHead>Context</TableHead>
-                        <TableHead>Status</TableHead>
+                        {!hideStatusColumn && <TableHead>Status</TableHead>}
                     </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -83,9 +84,11 @@ export function TaskList({filters}: TaskListProps) {
                                 <TableCell>
                                     <TaskContextDropdown task={task}/>
                                 </TableCell>
-                                <TableCell className={"flex justify-end"}>
-                                    <StatusBadge status={task.status}/>
-                                </TableCell>
+                                {!hideStatusColumn && (
+                                    <TableCell className={"flex justify-end"}>
+                                        <StatusBadge status={task.status}/>
+                                    </TableCell>
+                                )}
                             </TableRow>
                         ))}
                     </RowsWithSkeleton>

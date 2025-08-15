@@ -8,7 +8,7 @@ import {Status} from "@/services/api/status"
 import {Difficulty} from "@/services/api/difficulty"
 import {TaskTitle} from "@/components/task/task-title/taskTitle"
 import {TaskContextDropdown} from "@/components/task/task-context/taskContextDropdown"
-import {TaskTimeContextDropdown} from "@/components/task/task-time-context/taskTimeContextDropdown"
+import {TaskTimeContextSelector} from "@/components/task/task-time-context/taskTimeContextSelector"
 import {Task} from "@/services/api/task/taskService"
 
 interface TaskDetailCardProps {
@@ -90,12 +90,7 @@ export function TaskDetailCard({task, onClose}: TaskDetailCardProps) {
                             </CardTitle>
                         </CardHeader>
                         <CardContent>
-                            <div className="flex items-center gap-2">
-                                <TaskTimeContextDropdown task={task}/>
-                                <span className="text-sm text-muted-foreground">
-                                    {task.timeContext ? task.timeContext.charAt(0) + task.timeContext.slice(1).toLowerCase() : "No time context assigned"}
-                                </span>
-                            </div>
+                            <TaskTimeContextSelector task={task}/>
                         </CardContent>
                     </Card>
 

@@ -16,10 +16,13 @@ export default function NextActionsPage() {
                 <NewTaskButton hideBody={false}/>
             </div>
 
-            <TaskList filters={{
-                status: [Status.TODO],
-                contextId: contexts?.deviceContext?.id
-            }}/>
+            <TaskList 
+                filters={{
+                    status: [Status.TODO],
+                    contextId: contexts?.deviceContext?.id
+                }}
+                hideStatusColumn={true}
+            />
         </div>
 
     )
