@@ -16,6 +16,7 @@ export default function RootLayout(
         <html lang="fr" suppressHydrationWarning>
         <head>
             <title>Yet another planner</title>
+            <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         </head>
         <body>
         <div id="root">
