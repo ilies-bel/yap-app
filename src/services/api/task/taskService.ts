@@ -32,6 +32,7 @@ interface TaskPageFilter {
     status?: Status[]
     size?: number
     contextId?: number
+    timeContext?: 'NIGHT' | 'MORNING' | 'AFTERNOON' | 'EVENING'
 }
 
 export default function useTasks(filters?: TaskPageFilter) {
@@ -42,7 +43,8 @@ export default function useTasks(filters?: TaskPageFilter) {
                 status: filters?.status,
                 page: pageParam,
                 size: filters?.size ?? 20,
-                contextId: filters?.contextId
+                contextId: filters?.contextId,
+                timeContext: filters?.timeContext
             }
             const response = await axiosClient.get('/tasks', {params})
             return taskPageSchema.parse(response.data)

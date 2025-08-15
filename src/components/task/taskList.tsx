@@ -17,6 +17,7 @@ interface TaskListProps {
         status?: Status[]
         size?: number
         contextId?: number
+        timeContext?: 'NIGHT' | 'MORNING' | 'AFTERNOON' | 'EVENING'
     }
     hideStatusColumn?: boolean
 }
