@@ -1,15 +1,11 @@
 "use client"
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger,} from "@/components/ui/dropdown-menu"
 import {Button} from "@/components/ui/button"
 import {ChevronDown} from "lucide-react"
 import {useAllContexts} from "@/services/api/context/useAllContexts"
 import {useUpdateTask} from "@/services/api/task/useUpdateTask"
 import {Task} from "@/services/api/task/taskService"
+import React from "react";
 
 interface TaskContextDropdownProps {
     task: Task
@@ -40,7 +36,7 @@ export function TaskContextDropdown({task}: TaskContextDropdownProps) {
                     </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="start" className="w-48">
-                    <DropdownMenuItem 
+                    <DropdownMenuItem
                         onClick={() => handleContextChange(null)}
                         className={!task.context ? "bg-accent" : ""}
                     >
