@@ -6,6 +6,7 @@ interface UpdateTaskParams {
     id: number;
     contextName?: string | null;
     status?: string;
+    timeContext?: 'NIGHT' | 'MORNING' | 'AFTERNOON' | 'EVENING' | null;
 }
 
 export function useUpdateTask() {
@@ -14,6 +15,7 @@ export function useUpdateTask() {
     return useMutation({
         mutationFn: async (params: UpdateTaskParams): Promise<Task> => {
             const { id, ...updateData } = params;
+            console.log('Sending update to backend:', updateData);
             const response = await axiosClient.patch(`/tasks/${id}`, updateData);
             return response.data;
         },

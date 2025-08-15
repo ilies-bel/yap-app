@@ -19,7 +19,8 @@ const taskSchema = z.object({
     difficulty: DifficultySchema,
     context: contextSchema.nullable(),
     projectName: z.string().nullable(),
-    dueDate: z.string().nullable()
+    dueDate: z.string().nullable(),
+    timeContext: z.enum(['NIGHT', 'MORNING', 'AFTERNOON', 'EVENING']).nullable().optional()
 })
 
 export type Task = z.infer<typeof taskSchema>

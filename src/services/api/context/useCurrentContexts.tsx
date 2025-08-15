@@ -27,7 +27,6 @@ const contextsSchema = z.object({
     timeContext: timeContextSchema.nullable(),
 })
 
-export type Contexts = z.infer<typeof contextsSchema>
 
 export function useCurrentContexts() {
     return useQuery({

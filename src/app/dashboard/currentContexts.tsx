@@ -1,35 +1,6 @@
 import {Card, CardContent} from "@/components/ui/card";
 import {useCurrentContexts} from "@/services/api/context/useCurrentContexts";
-import {Smartphone, Monitor, Tablet, HardDrive, Clock, Sun, Cloud, Moon} from "lucide-react";
-
-
-const getDeviceIcon = (deviceType: string) => {
-    switch (deviceType?.toLowerCase()) {
-        case 'mobile':
-            return <Smartphone className="h-4 w-4" />
-        case 'desktop':
-            return <Monitor className="h-4 w-4" />
-        case 'tablet':
-            return <Tablet className="h-4 w-4" />
-        default:
-            return <HardDrive className="h-4 w-4" />
-    }
-}
-
-const getTimeIcon = (timeName: string) => {
-    switch (timeName?.toLowerCase()) {
-        case 'morning':
-            return <Sun className="h-4 w-4" />
-        case 'afternoon':
-            return <Cloud className="h-4 w-4" />
-        case 'evening':
-            return <Moon className="h-4 w-4" />
-        case 'night':
-            return <Moon className="h-4 w-4" />
-        default:
-            return <Clock className="h-4 w-4" />
-    }
-}
+import {getDeviceIcon, getTimeIcon} from "@/components/context/contextIcon";
 
 export function CurrentContexts() {
     const {data} = useCurrentContexts()

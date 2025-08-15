@@ -1,10 +1,11 @@
 "use client"
 import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger,} from "@/components/ui/dropdown-menu"
 import {Button} from "@/components/ui/button"
-import {ChevronDown} from "lucide-react"
+import {ChevronDown, Minus} from "lucide-react"
 import {useAllContexts} from "@/services/api/context/useAllContexts"
 import {useUpdateTask} from "@/services/api/task/useUpdateTask"
 import {Task} from "@/services/api/task/taskService"
+import {ContextIcon} from "@/components/context/contextIcon"
 import React from "react";
 
 interface TaskContextDropdownProps {
@@ -30,9 +31,12 @@ export function TaskContextDropdown({task}: TaskContextDropdownProps) {
         <div onClick={handleClick}>
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" size="sm" className="h-6 px-2 text-xs">
-                        {task.context?.name || 'No context'}
-                        <ChevronDown className="ml-1 h-3 w-3"/>
+                    <Button variant="ghost" size="icon" className="h-8 w-8">
+                        {task.context ? (
+                            <ContextIcon context={task.context} />
+                        ) : (
+                            <Minus className="h-4 w-4 text-muted-foreground" />
+                        )}
                     </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="start" className="w-48">
@@ -40,6 +44,7 @@ export function TaskContextDropdown({task}: TaskContextDropdownProps) {
                         onClick={() => handleContextChange(null)}
                         className={!task.context ? "bg-accent" : ""}
                     >
+                        <Minus className="h-4 w-4 mr-2 text-muted-foreground" />
                         No context
                     </DropdownMenuItem>
                     {contexts.map((context) => (
@@ -48,6 +53,9 @@ export function TaskContextDropdown({task}: TaskContextDropdownProps) {
                             onClick={() => handleContextChange(context.name)}
                             className={task.context?.name === context.name ? "bg-accent" : ""}
                         >
+                            <span className="mr-2">
+                                <ContextIcon context={context} />
+                            </span>
                             {context.name}
                         </DropdownMenuItem>
                     ))}

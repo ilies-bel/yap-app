@@ -3,21 +3,13 @@
 import {Dialog, DialogContent, DialogHeader, DialogTitle} from "@/components/ui/dialog"
 import {StatusBadge} from "@/components/ui/status-badge"
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card"
-import {CalendarIcon, FileTextIcon} from "lucide-react"
+import {CalendarIcon, FileTextIcon, MapPinIcon, Clock} from "lucide-react"
 import {Status} from "@/services/api/status"
 import {Difficulty} from "@/services/api/difficulty"
 import {TaskTitle} from "@/components/task/task-title/taskTitle"
-
-interface Task {
-    id: number
-    name: string
-    description: string | null
-    status: Status
-    difficulty: Difficulty
-    context: string | null
-    projectName: string | null
-    dueDate: string | null
-}
+import {TaskContextDropdown} from "@/components/task/task-context/taskContextDropdown"
+import {TaskTimeContextDropdown} from "@/components/task/task-time-context/taskTimeContextDropdown"
+import {Task} from "@/services/api/task/taskService"
 
 interface TaskDetailCardProps {
     task: Task | null
@@ -70,6 +62,40 @@ export function TaskDetailCard({task, onClose}: TaskDetailCardProps) {
                             <CardDescription className="text-sm">
                                 {formatDate(task.dueDate)}
                             </CardDescription>
+                        </CardContent>
+                    </Card>
+
+                    <Card>
+                        <CardHeader>
+                            <CardTitle className="text-sm font-medium flex items-center gap-2">
+                                <MapPinIcon className="h-4 w-4"/>
+                                Context
+                            </CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            <div className="flex items-center gap-2">
+                                <TaskContextDropdown task={task}/>
+                                <span className="text-sm text-muted-foreground">
+                                    {task.context?.name || "No context assigned"}
+                                </span>
+                            </div>
+                        </CardContent>
+                    </Card>
+
+                    <Card>
+                        <CardHeader>
+                            <CardTitle className="text-sm font-medium flex items-center gap-2">
+                                <Clock className="h-4 w-4"/>
+                                Time Context
+                            </CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            <div className="flex items-center gap-2">
+                                <TaskTimeContextDropdown task={task}/>
+                                <span className="text-sm text-muted-foreground">
+                                    {task.timeContext ? task.timeContext.charAt(0) + task.timeContext.slice(1).toLowerCase() : "No time context assigned"}
+                                </span>
+                            </div>
                         </CardContent>
                     </Card>
 
