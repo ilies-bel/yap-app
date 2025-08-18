@@ -24,6 +24,15 @@ export interface CaptureJob {
     errorMessage?: string
 }
 
+export interface CapturedTask {
+    id: number
+    name: string
+    url?: string
+    sourceUrl?: string
+    createdAt: string
+    status: string
+}
+
 export interface AuthUrlResponse {
     authorizationUrl: string
 }
@@ -49,4 +58,7 @@ export const redditApi = {
 
     startCapture: (): Promise<CaptureJob> =>
         apiClient.post('/reddit/capture').then(res => res.data),
+
+    getCapturedTasks: (): Promise<CapturedTask[]> =>
+        apiClient.get('/reddit/captured-tasks').then(res => res.data),
 }

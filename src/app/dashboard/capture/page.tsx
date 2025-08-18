@@ -4,7 +4,8 @@ import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/compo
 import {Button} from "@/components/ui/button"
 import {ExternalLink, Download, Unlink} from "lucide-react"
 import {RedditIcon} from "@/components/icons/RedditIcon"
-import {useRedditIntegration, useRedditAuthUrl, useDeleteRedditIntegration, useRedditCapture} from "@/hooks/use-reddit"
+import {useRedditIntegration, useRedditAuthUrl, useDeleteRedditIntegration, useRedditCapture, useRedditCapturedTasks} from "@/hooks/use-reddit"
+import {ExternalLink as ExternalLinkIcon, Clock, CheckCircle2, AlertCircle} from "lucide-react"
 
 // Simple toast replacement
 const toast = {
@@ -23,6 +24,7 @@ export default function CapturePage() {
     const { data: authUrl, refetch: getAuthUrl } = useRedditAuthUrl()
     const deleteIntegration = useDeleteRedditIntegration()
     const captureReddit = useRedditCapture()
+    const { data: capturedTasks, isLoading: tasksLoading } = useRedditCapturedTasks()
 
     const handleConnectReddit = async () => {
         try {
@@ -134,6 +136,73 @@ export default function CapturePage() {
                     </CardContent>
                 </Card>
             </div>
+
+            {/* Captured Reddit Tasks */}
+            {isConnected && capturedTasks && capturedTasks.length > 0 && (
+                <div className="mt-8">
+                    <h2 className="text-xl font-semibold mb-4">Captured Reddit Posts</h2>
+                    <div className="space-y-3">
+                        {capturedTasks.map((task) => (
+                            <Card key={task.id} className="hover:shadow-md transition-shadow">
+                                <CardContent className="p-4">
+                                    <div className="flex items-start justify-between">
+                                        <div className="flex-1">
+                                            <h3 className="font-medium text-base mb-1 line-clamp-2">
+                                                {task.name}
+                                            </h3>
+                                            <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                                                <span className="flex items-center gap-1">
+                                                    <Clock className="h-3 w-3" />
+                                                    {new Date(task.createdAt).toLocaleDateString()}
+                                                </span>
+                                                <span className={`flex items-center gap-1 ${
+                                                    task.status === 'CAPTURED' ? 'text-blue-600' :
+                                                    task.status === 'DONE' ? 'text-green-600' :
+                                                    'text-gray-600'
+                                                }`}>
+                                                    {task.status === 'DONE' ? (
+                                                        <CheckCircle2 className="h-3 w-3" />
+                                                    ) : (
+                                                        <AlertCircle className="h-3 w-3" />
+                                                    )}
+                                                    {task.status}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div className="flex gap-2">
+                                            {task.url && (
+                                                <Button
+                                                    variant="ghost"
+                                                    size="sm"
+                                                    onClick={() => window.open(task.url, '_blank')}
+                                                    className="text-muted-foreground hover:text-foreground"
+                                                >
+                                                    <ExternalLinkIcon className="h-4 w-4" />
+                                                </Button>
+                                            )}
+                                            {task.sourceUrl && (
+                                                <Button
+                                                    variant="ghost"
+                                                    size="sm"
+                                                    onClick={() => window.open(task.sourceUrl, '_blank')}
+                                                    className="text-orange-500 hover:text-orange-600"
+                                                >
+                                                    <RedditIcon className="h-4 w-4" />
+                                                </Button>
+                                            )}
+                                        </div>
+                                    </div>
+                                </CardContent>
+                            </Card>
+                        ))}
+                    </div>
+                    {tasksLoading && (
+                        <div className="text-center py-4 text-muted-foreground">
+                            Loading captured tasks...
+                        </div>
+                    )}
+                </div>
+            )}
         </div>
     )
 }

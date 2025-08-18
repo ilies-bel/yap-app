@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { redditApi, RedditIntegration, CaptureJob } from '@/lib/api/reddit'
+import { redditApi, RedditIntegration, CaptureJob, CapturedTask } from '@/lib/api/reddit'
 
 // Simple toast replacement using browser alerts for now
 const toast = {
@@ -60,6 +60,8 @@ export const useDeleteRedditIntegration = () => {
 }
 
 export const useRedditCapture = () => {
+  const queryClient = useQueryClient()
+  
   return useMutation({
     mutationFn: redditApi.startCapture,
     onSuccess: (job: CaptureJob) => {
@@ -67,6 +69,8 @@ export const useRedditCapture = () => {
         toast.success(
           `Capture completed! Created ${job.progress.createdTasks} tasks, skipped ${job.progress.duplicatesSkipped} duplicates`
         )
+        // Refresh captured tasks list
+        queryClient.invalidateQueries({ queryKey: ['reddit-captured-tasks'] })
       } else if (job.status === 'FAILED') {
         toast.error(`Capture failed: ${job.errorMessage}`)
       }
@@ -74,5 +78,12 @@ export const useRedditCapture = () => {
     onError: (error: any) => {
       toast.error('Failed to start Reddit capture: ' + error.message)
     },
+  })
+}
+
+export const useRedditCapturedTasks = () => {
+  return useQuery({
+    queryKey: ['reddit-captured-tasks'],
+    queryFn: redditApi.getCapturedTasks,
   })
 }
