@@ -2,7 +2,7 @@
 
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card"
 import {Button} from "@/components/ui/button"
-import {ExternalLink, Download, Unlink} from "lucide-react"
+import {ExternalLink, Download, Unlink, Bookmark} from "lucide-react"
 import {RedditIcon} from "@/components/icons/RedditIcon"
 import {useRedditIntegration, useRedditAuthUrl, useDeleteRedditIntegration, useRedditCapture, useRedditCapturedTasks} from "@/hooks/use-reddit"
 import {ExternalLink as ExternalLinkIcon, Clock, CheckCircle2, AlertCircle} from "lucide-react"
@@ -21,7 +21,7 @@ const toast = {
 
 export default function CapturePage() {
     const { data: integration, isLoading: integrationLoading, refetch } = useRedditIntegration()
-    const { data: authUrl, refetch: getAuthUrl } = useRedditAuthUrl()
+    const { refetch: getAuthUrl } = useRedditAuthUrl()
     const deleteIntegration = useDeleteRedditIntegration()
     const captureReddit = useRedditCapture()
     const { data: capturedTasks, isLoading: tasksLoading } = useRedditCapturedTasks()
@@ -82,6 +82,7 @@ export default function CapturePage() {
             </div>
 
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                {/* Reddit Favorites Card */}
                 <Card className="hover:shadow-md transition-shadow">
                     <CardHeader>
                         <CardTitle className="flex items-center gap-2 text-lg">
@@ -133,6 +134,68 @@ export default function CapturePage() {
                                 Connect Reddit Account
                             </Button>
                         )}
+                    </CardContent>
+                </Card>
+
+                {/* Browser Favorites Card */}
+                <Card className="hover:shadow-md transition-shadow">
+                    <CardHeader>
+                        <CardTitle className="flex items-center gap-2 text-lg">
+                            <Bookmark className="h-5 w-5 text-blue-500" />
+                            Browser Extension
+                        </CardTitle>
+                        <CardDescription>
+                            Sync all your browser bookmarks directly as tasks
+                        </CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                        <div className="text-sm text-muted-foreground">
+                            <p>• One-click bookmark sync</p>
+                            <p>• Works with Chrome, Edge, and other browsers</p>
+                            <p>• Secure authentication with your account</p>
+                            <p>• Automatic bookmark organization</p>
+                        </div>
+                        
+                        <div className="space-y-3">
+                            <div className="p-3 bg-muted/50 rounded-lg">
+                                <h4 className="text-sm font-medium mb-2">How to install:</h4>
+                                <ol className="text-xs text-muted-foreground space-y-1 ml-3">
+                                    <li>1. Download the YAP Browser Extension</li>
+                                    <li>2. Install from Chrome Web Store (coming soon) or load unpacked</li>
+                                    <li>3. Click the extension icon in your browser</li>
+                                    <li>4. Sign in with your YAP account</li>
+                                    <li>5. Click "Sync Bookmarks" to import all at once</li>
+                                </ol>
+                            </div>
+                            
+                            <Button 
+                                className="w-full" 
+                                onClick={() => alert('Extension download will be available soon! For now, build from source in the yap-browser-extension directory.')}
+                                variant="default"
+                            >
+                                <Download className="h-4 w-4 mr-2" />
+                                Download Extension
+                            </Button>
+                            
+                            <Button 
+                                variant="outline" 
+                                className="w-full" 
+                                onClick={() => alert('For now: 1) cd yap-browser-extension 2) npm run build 3) Load unpacked extension from build/chrome-mv3-prod')}
+                            >
+                                <ExternalLink className="h-4 w-4 mr-2" />
+                                Installation Guide
+                            </Button>
+                        </div>
+                        
+                        <div className="text-xs text-muted-foreground bg-blue-50 dark:bg-blue-950/20 p-3 rounded-lg border">
+                            <div className="font-medium text-blue-700 dark:text-blue-300 mb-1">
+                                💡 Pro Tip
+                            </div>
+                            <p>
+                                The extension runs entirely in your browser and only sends bookmark data to your YAP account. 
+                                Your bookmarks are never stored elsewhere.
+                            </p>
+                        </div>
                     </CardContent>
                 </Card>
             </div>
