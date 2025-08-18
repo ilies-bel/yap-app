@@ -1,5 +1,5 @@
 import {useQuery} from "@tanstack/react-query";
-import {axiosClient} from "@/services/api/apiClient";
+import {httpClient} from "@/services/api/apiClient";
 import {z} from "zod";
 
 const enum ContextType {
@@ -32,7 +32,7 @@ export function useCurrentContexts() {
     return useQuery({
         queryKey: ['contexts'],
         queryFn: async () => {
-            const res = await axiosClient.get('/users/me/contexts')
+            const res = await httpClient.get('/users/me/contexts')
             return contextsSchema.parse(res.data)
         },
     });

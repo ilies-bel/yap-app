@@ -1,5 +1,5 @@
 import {useMutation, useQueryClient} from "@tanstack/react-query";
-import {axiosClient} from "@/services/api/apiClient";
+import {httpClient} from "@/services/api/apiClient";
 import {Task} from "./taskService";
 
 interface UpdateTaskParams {
@@ -15,12 +15,12 @@ export function useUpdateTask() {
 
     return useMutation({
         mutationFn: async (params: UpdateTaskParams): Promise<Task> => {
-            const { id, ...updateData } = params;
-            const response = await axiosClient.patch(`/tasks/${id}`, updateData);
+            const {id, ...updateData} = params;
+            const response = await httpClient.patch(`/tasks/${id}`, updateData);
             return response.data;
         },
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['tasks'] });
+            queryClient.invalidateQueries({queryKey: ['tasks']});
         },
     });
 }

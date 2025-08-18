@@ -5,7 +5,7 @@ import {deviceService} from "@/services/device/deviceService";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
 
-export const axiosClient = axios.create({
+export const httpClient = axios.create({
     baseURL: API_URL,
     headers: {
         'Content-Type': 'application/json',
@@ -46,7 +46,7 @@ function isRefreshEndpoint(url: string) {
 }
 
 
-axiosClient.interceptors.request.use(async (config) => {
+httpClient.interceptors.request.use(async (config) => {
 
     if (config.url && isRefreshEndpoint(config.url)) {
         return config;

@@ -1,6 +1,6 @@
 "use client"
 
-import {axiosClient} from "@/services/api/apiClient";
+import {httpClient} from "@/services/api/apiClient";
 
 const testServerNotification = async () => {
     const permission = await Notification.requestPermission();
@@ -16,7 +16,7 @@ const testServerNotification = async () => {
     }
 
     console.log('Sending notification from server');
-    await axiosClient.post('/api/public/push/notify', {
+    await httpClient.post('/api/public/push/notify', {
         message: 'Test notification from server'
     })
 };

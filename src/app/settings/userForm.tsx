@@ -2,14 +2,14 @@
 import React from "react";
 import {Label} from "@/components/ui/label";
 import {Input} from "@/components/ui/input";
-import {axiosClient} from "@/services/api/apiClient";
+import {httpClient} from "@/services/api/apiClient";
 
 export function UserForm() {
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault(); // Prevent default form submission
         const formData = new FormData(e.currentTarget);
         const name = formData.get("name") as string;
-        axiosClient.post("/users", {name});
+        httpClient.post("/users", {name});
     }
 
     return (

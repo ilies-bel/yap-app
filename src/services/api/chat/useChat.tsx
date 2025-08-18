@@ -1,5 +1,5 @@
 import {useQuery} from "@tanstack/react-query";
-import {axiosClient} from "@/services/api/apiClient";
+import {httpClient} from "@/services/api/apiClient";
 import {z} from "zod";
 
 export const chatSchema = z.object({
@@ -11,7 +11,7 @@ export function useChat() {
     return useQuery({
         queryKey: ['chats'],
         queryFn: async () => {
-            const res = await axiosClient.get("/chats/current")
+            const res = await httpClient.get("/chats/current")
             return chatSchema.parse(res.data)
         },
     })

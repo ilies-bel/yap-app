@@ -1,5 +1,5 @@
 import {useMutation, useQueryClient} from "@tanstack/react-query"
-import {axiosClient} from "@/services/api/apiClient"
+import {httpClient} from "@/services/api/apiClient"
 import {Status} from "@/services/api/status"
 
 interface UpdateTaskStatusParams {
@@ -12,7 +12,7 @@ export function useUpdateTaskStatus() {
 
     return useMutation({
         mutationFn: async ({taskId, status}: UpdateTaskStatusParams) => {
-            const response = await axiosClient.patch(`/tasks/${taskId}`, {status})
+            const response = await httpClient.patch(`/tasks/${taskId}`, {status})
             return response.data
         },
         onSuccess: () => {

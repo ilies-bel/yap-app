@@ -1,5 +1,5 @@
 import {tokenService} from "@/services/api/tokenService";
-import {axiosClient} from "@/services/api/apiClient";
+import {httpClient} from "@/services/api/apiClient";
 
 
 // Auth functions
@@ -7,7 +7,7 @@ export const authService = {
     // Register new user
     register: async (email: string, password: string) => {
         try {
-            const response = await axiosClient.post('/auth/register', {email, password});
+            const response = await httpClient.post('/auth/register', {email, password});
             return response.data;
         } catch (error) {
             // @ts-expect-error dkdkdk
@@ -18,7 +18,7 @@ export const authService = {
     // Login user
     login: async (email: string, password: string) => {
         try {
-            const response = await axiosClient.post('/auth/login', {email, password});
+            const response = await httpClient.post('/auth/login', {email, password});
             const {token, expiresIn} = response.data;
 
             tokenService.setToken(token, expiresIn)

@@ -1,6 +1,6 @@
 import {z} from "zod";
 import {useInfiniteQuery} from "@tanstack/react-query";
-import {axiosClient} from "@/services/api/apiClient";
+import {httpClient} from "@/services/api/apiClient";
 import {Status, StatusSchema} from "@/services/api/status";
 import {DifficultySchema} from "@/services/api/difficulty";
 import {createPageSchema, PageImpl} from "@/services/api/pageImpl";
@@ -46,7 +46,7 @@ export default function useTasks(filters?: TaskPageFilter) {
                 contextId: filters?.contextId,
                 timeContext: filters?.timeContext
             }
-            const response = await axiosClient.get('/tasks', {params})
+            const response = await httpClient.get('/tasks', {params})
             return taskPageSchema.parse(response.data)
         },
         getNextPageParam: (lastPage) => {
