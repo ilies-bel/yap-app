@@ -37,3 +37,16 @@ export function useAddDevice() {
         },
     })
 }
+
+export function useDeleteDevice() {
+    const queryClient = useQueryClient()
+
+    return useMutation({
+        mutationFn: async (deviceId: string) => {
+            await axiosClient.delete(`/users/current/devices/${deviceId}`)
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({queryKey: ['devices']})
+        },
+    })
+}

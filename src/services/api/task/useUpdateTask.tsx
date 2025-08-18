@@ -7,6 +7,7 @@ interface UpdateTaskParams {
     contextName?: string | null;
     status?: string;
     timeContext?: 'NIGHT' | 'MORNING' | 'AFTERNOON' | 'EVENING' | null;
+    description?: string | null;
 }
 
 export function useUpdateTask() {

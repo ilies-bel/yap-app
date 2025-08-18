@@ -4,8 +4,8 @@ import {Card} from "@/components/ui/card";
 import {Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger} from "@/components/ui/dialog";
 import {Input} from "@/components/ui/input";
 import {Label} from "@/components/ui/label";
-import {useAddDevice, useDevices} from "@/services/api/device/deviceService";
-import {HardDrive, Monitor, Smartphone, Tablet} from "lucide-react";
+import {useAddDevice, useDeleteDevice, useDevices} from "@/services/api/device/deviceService";
+import {HardDrive, Monitor, Smartphone, Tablet, Trash2} from "lucide-react";
 import React, {useState} from "react";
 
 const getDeviceIcon = (deviceType: string) => {
@@ -28,6 +28,7 @@ const formatDate = (dateString: string) => {
 export function DeviceForm() {
     const {data: devices, isLoading} = useDevices()
     const addDevice = useAddDevice()
+    const deleteDevice = useDeleteDevice()
     const [deviceName, setDeviceName] = useState('')
     const [isDialogOpen, setIsDialogOpen] = useState(false)
 
@@ -39,6 +40,12 @@ export function DeviceForm() {
                     setIsDialogOpen(false)
                 }
             })
+        }
+    }
+
+    const handleDeleteDevice = (deviceId: string) => {
+        if (confirm('Are you sure you want to delete this device?')) {
+            deleteDevice.mutate(deviceId)
         }
     }
 
@@ -102,12 +109,23 @@ export function DeviceForm() {
                                             <p className="text-xs text-gray-500">{device.type}</p>
                                         </div>
                                     </div>
-                                    <div className="text-right">
-                                        {device.lastUsedAt && (
-                                            <p className="text-xs text-gray-500">
-                                                Last used: {formatDate(device.lastUsedAt)}
-                                            </p>
-                                        )}
+                                    <div className="flex items-center gap-2">
+                                        <div className="text-right">
+                                            {device.lastUsedAt && (
+                                                <p className="text-xs text-gray-500">
+                                                    Last used: {formatDate(device.lastUsedAt)}
+                                                </p>
+                                            )}
+                                        </div>
+                                        <Button
+                                            variant="ghost"
+                                            size="icon"
+                                            className="h-8 w-8 text-red-500 hover:text-red-700"
+                                            onClick={() => handleDeleteDevice(device.id)}
+                                            disabled={deleteDevice.isPending}
+                                        >
+                                            <Trash2 className="h-4 w-4" />
+                                        </Button>
                                     </div>
                                 </div>
                             </Card>

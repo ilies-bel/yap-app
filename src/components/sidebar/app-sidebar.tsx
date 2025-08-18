@@ -8,7 +8,7 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import {Calendar, Home, Inbox, Settings} from "lucide-react";
+import {Calendar, Home, Inbox, Settings, Zap} from "lucide-react";
 import {LogOutSidebarMenuButton} from "@/components/sidebar/log-out-sidebar-menu-button";
 import {usePathname} from "next/navigation";
 import Link from "next/link";
@@ -18,6 +18,11 @@ const items = [
         title: "Home",
         url: "/dashboard",
         icon: Home,
+    },
+    {
+        title: "Capture",
+        url: "/dashboard/capture",
+        icon: Zap,
     },
     {
         title: "Inbox",
