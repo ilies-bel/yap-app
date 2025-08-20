@@ -218,18 +218,12 @@ export default function CapturePage() {
                                                     <Clock className="h-3 w-3" />
                                                     {new Date(task.createdAt).toLocaleDateString()}
                                                 </span>
-                                                <span className={`flex items-center gap-1 ${
-                                                    task.status === 'CAPTURED' ? 'text-blue-600' :
-                                                    task.status === 'DONE' ? 'text-green-600' :
-                                                    'text-gray-600'
-                                                }`}>
-                                                    {task.status === 'DONE' ? (
+                                                {task.status === 'DONE' && (
+                                                    <span className="flex items-center gap-1 text-green-600">
                                                         <CheckCircle2 className="h-3 w-3" />
-                                                    ) : (
-                                                        <AlertCircle className="h-3 w-3" />
-                                                    )}
-                                                    {task.status}
-                                                </span>
+                                                        {task.status}
+                                                    </span>
+                                                )}
                                             </div>
                                         </div>
                                         <div className="flex gap-2">
