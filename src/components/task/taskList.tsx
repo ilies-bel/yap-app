@@ -10,6 +10,7 @@ import {TaskTitle} from "@/components/task/task-title/taskTitle";
 import {TaskContextDropdown} from "@/components/task/task-context/taskContextDropdown";
 import {useMemo, useState} from "react";
 import {useInView} from "react-intersection-observer";
+import {TagList} from "@/components/tag/TagPill";
 
 
 interface TaskListProps {
@@ -18,6 +19,8 @@ interface TaskListProps {
         size?: number
         contextId?: number
         timeContext?: 'NIGHT' | 'MORNING' | 'AFTERNOON' | 'EVENING'
+        tagIds?: number[]
+        tagMode?: 'any' | 'all'
     }
     hideStatusColumn?: boolean
 }
@@ -65,6 +68,7 @@ export function TaskList({filters, hideStatusColumn = false}: TaskListProps) {
                         <TableHead className="w-12"></TableHead>
                         <TableHead>Name</TableHead>
                         <TableHead>Context</TableHead>
+                        <TableHead>Tags</TableHead>
                         {!hideStatusColumn && <TableHead>Status</TableHead>}
                     </TableRow>
                 </TableHeader>
@@ -84,6 +88,14 @@ export function TaskList({filters, hideStatusColumn = false}: TaskListProps) {
                                 </TableCell>
                                 <TableCell>
                                     <TaskContextDropdown task={task}/>
+                                </TableCell>
+                                <TableCell>
+                                    <TagList 
+                                        tags={task.tags || []} 
+                                        size="sm" 
+                                        variant="outline"
+                                        maxTags={3}
+                                    />
                                 </TableCell>
                                 {!hideStatusColumn && (
                                     <TableCell className={"flex justify-end"}>

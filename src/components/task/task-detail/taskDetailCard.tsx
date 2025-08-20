@@ -3,7 +3,7 @@
 import {Dialog, DialogContent, DialogHeader, DialogTitle} from "@/components/ui/dialog"
 import {StatusBadge} from "@/components/ui/status-badge"
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card"
-import {CalendarIcon, FileTextIcon, MapPinIcon, Clock, Edit2, Save, X} from "lucide-react"
+import {CalendarIcon, FileTextIcon, MapPinIcon, Clock, Edit2, Save, X, Hash} from "lucide-react"
 import {Status} from "@/services/api/status"
 import {Difficulty} from "@/services/api/difficulty"
 import {TaskTitle} from "@/components/task/task-title/taskTitle"
@@ -14,6 +14,9 @@ import {useUpdateTask} from "@/services/api/task/useUpdateTask"
 import {Button} from "@/components/ui/button"
 import {Textarea} from "@/components/ui/textarea"
 import {useState, useEffect} from "react"
+import {TagList} from "@/components/tag/TagPill"
+import {TagSelector} from "@/components/tag/TagSelector"
+import {useAssignTagsToTask, useRemoveTagsFromTask} from "@/services/api/tags/tagService"
 
 interface TaskDetailCardProps {
     task: Task | null
@@ -24,14 +27,21 @@ export function TaskDetailCard({task, onClose}: TaskDetailCardProps) {
     if (!task) return null
 
     const updateTask = useUpdateTask()
+    const assignTagsMutation = useAssignTagsToTask()
+    const removeTagsMutation = useRemoveTagsFromTask()
+    
     const [isEditingDescription, setIsEditingDescription] = useState(false)
     const [editedDescription, setEditedDescription] = useState(task.description || "")
+    const [isEditingTags, setIsEditingTags] = useState(false)
+    const [selectedTags, setSelectedTags] = useState(task.tags || [])
 
-    // Update editedDescription when task changes
+    // Update editedDescription and selectedTags when task changes
     useEffect(() => {
         setEditedDescription(task.description || "")
+        setSelectedTags(task.tags || [])
         setIsEditingDescription(false)
-    }, [task.id, task.description])
+        setIsEditingTags(false)
+    }, [task.id, task.description, task.tags])
 
     const formatDate = (dateString: string | null) => {
         if (!dateString) return "No due date"
@@ -52,6 +62,46 @@ export function TaskDetailCard({task, onClose}: TaskDetailCardProps) {
     const handleCancelEdit = () => {
         setEditedDescription(task.description || "")
         setIsEditingDescription(false)
+    }
+
+    const handleSaveTags = async () => {
+        if (!task.id) return
+
+        try {
+            const currentTagIds = new Set(task.tags?.map(t => t.id) || [])
+            const newTagIds = new Set(selectedTags.map(t => t.id))
+
+            // Find tags to add and remove
+            const tagsToAdd = selectedTags.filter(t => !currentTagIds.has(t.id!))
+            const tagsToRemove = (task.tags || []).filter(t => !newTagIds.has(t.id!))
+
+            // Remove tags first
+            if (tagsToRemove.length > 0) {
+                await removeTagsMutation.mutateAsync({
+                    taskId: task.id,
+                    tagIds: tagsToRemove.map(t => t.id!)
+                })
+            }
+
+            // Add new tags
+            if (tagsToAdd.length > 0) {
+                await assignTagsMutation.mutateAsync({
+                    taskId: task.id,
+                    tagIds: tagsToAdd.map(t => t.id!)
+                })
+            }
+
+            setIsEditingTags(false)
+        } catch (error) {
+            console.error('Failed to update tags:', error)
+            // Reset to original tags on error
+            setSelectedTags(task.tags || [])
+        }
+    }
+
+    const handleCancelTagEdit = () => {
+        setSelectedTags(task.tags || [])
+        setIsEditingTags(false)
     }
 
     return (
@@ -164,6 +214,71 @@ export function TaskDetailCard({task, onClose}: TaskDetailCardProps) {
                         </CardHeader>
                         <CardContent>
                             <TaskTimeContextSelector task={task}/>
+                        </CardContent>
+                    </Card>
+
+                    <Card>
+                        <CardHeader>
+                            <CardTitle className="text-sm font-medium flex items-center justify-between">
+                                <div className="flex items-center gap-2">
+                                    <Hash className="h-4 w-4"/>
+                                    Tags
+                                </div>
+                                {!isEditingTags ? (
+                                    <Button
+                                        variant="ghost"
+                                        size="icon"
+                                        className="h-6 w-6"
+                                        onClick={() => setIsEditingTags(true)}
+                                    >
+                                        <Edit2 className="h-3 w-3"/>
+                                    </Button>
+                                ) : (
+                                    <div className="flex gap-1">
+                                        <Button
+                                            variant="ghost"
+                                            size="icon"
+                                            className="h-6 w-6 text-green-600"
+                                            onClick={handleSaveTags}
+                                            disabled={assignTagsMutation.isPending || removeTagsMutation.isPending}
+                                        >
+                                            <Save className="h-3 w-3"/>
+                                        </Button>
+                                        <Button
+                                            variant="ghost"
+                                            size="icon"
+                                            className="h-6 w-6 text-red-600"
+                                            onClick={handleCancelTagEdit}
+                                            disabled={assignTagsMutation.isPending || removeTagsMutation.isPending}
+                                        >
+                                            <X className="h-3 w-3"/>
+                                        </Button>
+                                    </div>
+                                )}
+                            </CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            {isEditingTags ? (
+                                <TagSelector
+                                    selectedTags={selectedTags}
+                                    onTagsChange={setSelectedTags}
+                                    placeholder="Select tags for this task..."
+                                />
+                            ) : (
+                                <>
+                                    {task.tags && task.tags.length > 0 ? (
+                                        <TagList 
+                                            tags={task.tags} 
+                                            size="md" 
+                                            variant="default"
+                                        />
+                                    ) : (
+                                        <CardDescription className="text-sm">
+                                            No tags assigned
+                                        </CardDescription>
+                                    )}
+                                </>
+                            )}
                         </CardContent>
                     </Card>
 

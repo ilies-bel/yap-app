@@ -11,6 +11,17 @@ const contextSchema = z.object({
     type: z.enum(['LOCATION', 'TIME', 'DEVICE']),
 })
 
+const tagSchema = z.object({
+    id: z.number(),
+    name: z.string(),
+    color: z.string(),
+    description: z.string().nullable().optional(),
+    usageCount: z.number(),
+    createdAt: z.string(),
+    updatedAt: z.string(),
+    isArchived: z.boolean()
+})
+
 const taskSchema = z.object({
     id: z.number(),
     name: z.string(),
@@ -20,7 +31,8 @@ const taskSchema = z.object({
     context: contextSchema.nullable(),
     projectName: z.string().nullable(),
     dueDate: z.string().nullable(),
-    timeContext: z.enum(['NIGHT', 'MORNING', 'AFTERNOON', 'EVENING']).nullable().optional()
+    timeContext: z.enum(['NIGHT', 'MORNING', 'AFTERNOON', 'EVENING']).nullable().optional(),
+    tags: z.array(tagSchema).optional().default([])
 })
 
 export type Task = z.infer<typeof taskSchema>
@@ -33,6 +45,8 @@ interface TaskPageFilter {
     size?: number
     contextId?: number
     timeContext?: 'NIGHT' | 'MORNING' | 'AFTERNOON' | 'EVENING'
+    tagIds?: number[]
+    tagMode?: 'any' | 'all'
 }
 
 export default function useTasks(filters?: TaskPageFilter) {
@@ -44,7 +58,9 @@ export default function useTasks(filters?: TaskPageFilter) {
                 page: pageParam,
                 size: filters?.size ?? 20,
                 contextId: filters?.contextId,
-                timeContext: filters?.timeContext
+                timeContext: filters?.timeContext,
+                tagIds: filters?.tagIds,
+                tagMode: filters?.tagMode
             }
             const response = await httpClient.get('/tasks', {params})
             return taskPageSchema.parse(response.data)
