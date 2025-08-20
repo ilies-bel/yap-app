@@ -42,7 +42,7 @@ export function TaskList({filters, hideStatusColumn = false}: TaskListProps) {
     }, [data])
 
     // Intersection observer for infinite scroll
-    useInView({
+    const { ref: inViewRef } = useInView({
         threshold: 0,
         onChange: (inView) => {
             if (inView && hasNextPage && !isFetchingNextPage) {
@@ -105,6 +105,22 @@ export function TaskList({filters, hideStatusColumn = false}: TaskListProps) {
                             </TableRow>
                         ))}
                     </RowsWithSkeleton>
+                    
+                    {/* Infinite scroll trigger */}
+                    {hasNextPage && (
+                        <TableRow ref={inViewRef}>
+                            <TableCell colSpan={hideStatusColumn ? 4 : 5} className="text-center py-4">
+                                {isFetchingNextPage ? (
+                                    <div className="flex items-center justify-center space-x-2">
+                                        <div className="w-4 h-4 border-2 border-gray-300 border-t-blue-600 rounded-full animate-spin"></div>
+                                        <span className="text-sm text-gray-500">Loading more tasks...</span>
+                                    </div>
+                                ) : (
+                                    <div className="text-sm text-gray-400">Loading trigger</div>
+                                )}
+                            </TableCell>
+                        </TableRow>
+                    )}
                 </TableBody>
             </Table>
 
