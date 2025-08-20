@@ -2,7 +2,7 @@
 
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card"
 import {Button} from "@/components/ui/button"
-import {ExternalLink, Download, Unlink, Bookmark} from "lucide-react"
+import {ExternalLink, Download, Unlink, Bookmark, Camera} from "lucide-react"
 import {RedditIcon} from "@/components/icons/RedditIcon"
 import {useRedditIntegration, useRedditAuthUrl, useDeleteRedditIntegration, useRedditCapture, useRedditCapturedTasks} from "@/hooks/use-reddit"
 import {ExternalLink as ExternalLinkIcon, Clock, CheckCircle2, AlertCircle} from "lucide-react"
@@ -196,6 +196,50 @@ export default function CapturePage() {
                                 Your bookmarks are never stored elsewhere.
                             </p>
                         </div>
+                    </CardContent>
+                </Card>
+
+                {/* Screenshot Capture Card */}
+                <Card className="hover:shadow-md transition-shadow">
+                    <CardHeader>
+                        <CardTitle className="flex items-center gap-2 text-lg">
+                            <Camera className="h-5 w-5 text-purple-500" />
+                            Screenshot Capture
+                        </CardTitle>
+                        <CardDescription>
+                            Extract tasks and information from screenshots using AI
+                        </CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                        <div className="text-sm text-muted-foreground">
+                            <p>• Capture text from any screenshot</p>
+                            <p>• AI-powered text extraction</p>
+                            <p>• Convert visual content to actionable tasks</p>
+                            <p>• Support for multiple image formats</p>
+                        </div>
+                        
+                        <div className="p-4 bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-950/20 dark:to-pink-950/20 rounded-lg border border-purple-200 dark:border-purple-800">
+                            <div className="flex items-center gap-2 mb-2">
+                                <div className="h-2 w-2 bg-purple-500 rounded-full animate-pulse" />
+                                <span className="text-sm font-medium text-purple-700 dark:text-purple-300">
+                                    Coming Soon
+                                </span>
+                            </div>
+                            <p className="text-xs text-muted-foreground">
+                                We're working on bringing you powerful screenshot capture capabilities. 
+                                You'll be able to drag and drop screenshots or paste them directly to 
+                                automatically extract tasks and information.
+                            </p>
+                        </div>
+                        
+                        <Button 
+                            className="w-full" 
+                            disabled
+                            variant="outline"
+                        >
+                            <Camera className="h-4 w-4 mr-2" />
+                            Available Soon
+                        </Button>
                     </CardContent>
                 </Card>
             </div>
