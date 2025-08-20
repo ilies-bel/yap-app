@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/sidebar"
 import {Calendar, Home, Inbox, Settings, Zap} from "lucide-react";
 import {LogOutSidebarMenuButton} from "@/components/sidebar/log-out-sidebar-menu-button";
+import {SidebarToggleSection} from "@/components/sidebar/sidebar-toggle-section";
 import {usePathname} from "next/navigation";
 import Link from "next/link";
 
@@ -47,10 +48,10 @@ export function AppSidebar() {
     }
 
     return (
-        <Sidebar>
-
-            <SidebarContent className={"p-4"}>
-                <SidebarMenu>
+        <Sidebar collapsible="icon">
+            <SidebarContent className={"py-2 relative"}>
+                <SidebarToggleSection/>
+                <SidebarMenu className="px-2">
                     {items.map((item) => (
                         <SidebarMenuItem key={item.title}>
                             <SidebarMenuButton asChild isActive={isActive(item.url)}>
@@ -64,7 +65,7 @@ export function AppSidebar() {
                 </SidebarMenu>
             </SidebarContent>
 
-            <SidebarFooter className={"p-4"}>
+            <SidebarFooter className={"p-2 px-4"}>
 
                 <SidebarMenuButton asChild isActive={pathname === '/settings'}>
                     <Link href={"/settings"}>

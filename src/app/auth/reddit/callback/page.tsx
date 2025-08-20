@@ -1,12 +1,12 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import { useSearchParams } from 'next/navigation'
-import { useRedditAuth } from '@/hooks/use-reddit'
+import {useEffect, useState} from 'react'
+import {useSearchParams} from 'next/navigation'
+import {useRedditAuth} from '@/hooks/use-reddit'
 
 export default function RedditCallbackPage() {
     const searchParams = useSearchParams()
-    const { mutate: handleAuth, isPending, isError, error } = useRedditAuth()
+    const {mutate: handleAuth, isPending, error} = useRedditAuth()
     const [status, setStatus] = useState<'processing' | 'success' | 'error'>('processing')
 
     useEffect(() => {
@@ -31,7 +31,7 @@ export default function RedditCallbackPage() {
         if (code && state) {
             // Call backend to exchange code for tokens
             handleAuth(
-                { code, state },
+                {code, state},
                 {
                     onSuccess: () => {
                         setStatus('success')
@@ -39,7 +39,7 @@ export default function RedditCallbackPage() {
                         if (window.opener) {
                             window.opener.postMessage({
                                 type: 'REDDIT_AUTH_SUCCESS',
-                                data: { success: true }
+                                data: {success: true}
                             }, '*')
                         }
                         // Close window after delay
@@ -84,11 +84,11 @@ export default function RedditCallbackPage() {
             }}>
                 {status === 'processing' && (
                     <>
-                        <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>🔄</div>
-                        <h1 style={{ fontSize: '1.5rem', margin: '0 0 0.5rem 0' }}>
+                        <div style={{fontSize: '4rem', marginBottom: '1rem'}}>🔄</div>
+                        <h1 style={{fontSize: '1.5rem', margin: '0 0 0.5rem 0'}}>
                             Connecting Reddit Account...
                         </h1>
-                        <p style={{ margin: 0, opacity: 0.8 }}>Please wait while we authenticate</p>
+                        <p style={{margin: 0, opacity: 0.8}}>Please wait while we authenticate</p>
                         {isPending && (
                             <div style={{
                                 marginTop: '1rem',
@@ -99,28 +99,28 @@ export default function RedditCallbackPage() {
                                 borderRadius: '50%',
                                 borderTopColor: 'white',
                                 animation: 'spin 1s ease-in-out infinite'
-                            }} />
+                            }}/>
                         )}
                     </>
                 )}
 
                 {status === 'success' && (
                     <>
-                        <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>✅</div>
-                        <h1 style={{ fontSize: '1.5rem', margin: '0 0 0.5rem 0' }}>
+                        <div style={{fontSize: '4rem', marginBottom: '1rem'}}>✅</div>
+                        <h1 style={{fontSize: '1.5rem', margin: '0 0 0.5rem 0'}}>
                             Reddit Connected Successfully!
                         </h1>
-                        <p style={{ margin: 0, opacity: 0.8 }}>You can now close this window</p>
+                        <p style={{margin: 0, opacity: 0.8}}>You can now close this window</p>
                     </>
                 )}
 
                 {status === 'error' && (
                     <>
-                        <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>❌</div>
-                        <h1 style={{ fontSize: '1.5rem', margin: '0 0 0.5rem 0' }}>
+                        <div style={{fontSize: '4rem', marginBottom: '1rem'}}>❌</div>
+                        <h1 style={{fontSize: '1.5rem', margin: '0 0 0.5rem 0'}}>
                             Connection Failed
                         </h1>
-                        <p style={{ margin: 0, opacity: 0.8 }}>
+                        <p style={{margin: 0, opacity: 0.8}}>
                             {error?.response?.data?.error || error?.message || searchParams.get('error') || 'Failed to connect Reddit account'}
                         </p>
                     </>
@@ -129,7 +129,9 @@ export default function RedditCallbackPage() {
 
             <style jsx>{`
                 @keyframes spin {
-                    to { transform: rotate(360deg); }
+                    to {
+                        transform: rotate(360deg);
+                    }
                 }
             `}</style>
         </div>
