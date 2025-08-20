@@ -31,12 +31,19 @@ export function TaskContextDropdown({task}: TaskContextDropdownProps) {
         <div onClick={handleClick}>
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" size="icon" className="h-8 w-8">
+                    <Button variant="ghost" className="h-8 px-2 text-left justify-start">
                         {task.context ? (
-                            <ContextIcon context={task.context} />
+                            <div className="flex items-center space-x-2">
+                                <ContextIcon context={task.context} />
+                                <span className="text-sm truncate max-w-20">{task.context.name}</span>
+                            </div>
                         ) : (
-                            <Minus className="h-4 w-4 text-muted-foreground" />
+                            <div className="flex items-center space-x-2">
+                                <Minus className="h-4 w-4 text-muted-foreground" />
+                                <span className="text-sm text-muted-foreground">No context</span>
+                            </div>
                         )}
+                        <ChevronDown className="h-4 w-4 ml-auto text-muted-foreground" />
                     </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="start" className="w-48">
