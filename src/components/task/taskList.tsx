@@ -10,7 +10,7 @@ import {TaskTitle} from "@/components/task/task-title/taskTitle";
 import {TaskContextDropdown} from "@/components/task/task-context/taskContextDropdown";
 import {useMemo, useState} from "react";
 import {useInView} from "react-intersection-observer";
-import {TagList} from "@/components/tag/TagPill";
+import {TaskTagDropdown} from "@/components/task/task-tag/taskTagDropdown";
 
 
 interface TaskListProps {
@@ -90,12 +90,7 @@ export function TaskList({filters, hideStatusColumn = false}: TaskListProps) {
                                     <TaskContextDropdown task={task}/>
                                 </TableCell>
                                 <TableCell>
-                                    <TagList 
-                                        tags={task.tags || []} 
-                                        size="sm" 
-                                        variant="outline"
-                                        maxTags={3}
-                                    />
+                                    <TaskTagDropdown task={task} />
                                 </TableCell>
                                 {!hideStatusColumn && (
                                     <TableCell className={"flex justify-end"}>
