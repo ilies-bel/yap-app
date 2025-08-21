@@ -3,9 +3,10 @@ import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger
 import {Button} from "@/components/ui/button"
 import {ChevronDown, Plus, Tag as TagIcon, X} from "lucide-react"
 import {Task} from "@/services/api/task/taskService"
-import {useTags, useAssignTagsToTask, useRemoveTagsFromTask, Tag} from "@/services/api/tags/tagService"
+import {useTags, useAssignTagsToTask, useRemoveTagsFromTask, useCreateTag, Tag} from "@/services/api/tags/tagService"
 import {TagPill} from "@/components/tag/TagPill"
 import React, {useState} from "react"
+import {Input} from "@/components/ui/input"
 
 interface TaskTagDropdownProps {
     task: Task
@@ -15,7 +16,11 @@ export function TaskTagDropdown({task}: TaskTagDropdownProps) {
     const {data: tagsPage} = useTags({size: 50}) // Get more tags for selection
     const assignTags = useAssignTagsToTask()
     const removeTags = useRemoveTagsFromTask()
+    const createTag = useCreateTag()
     const [isOpen, setIsOpen] = useState(false)
+    const [isCreatingTag, setIsCreatingTag] = useState(false)
+    const [newTagName, setNewTagName] = useState('')
+    const [newTagColor, setNewTagColor] = useState('#808080')
 
     const availableTags = tagsPage?.content ?? []
     const taskTags = task.tags ?? []
@@ -50,6 +55,33 @@ export function TaskTagDropdown({task}: TaskTagDropdownProps) {
                 console.log('Tag removed successfully')
             }
         })
+    }
+
+    const handleCreateAndAssignTag = () => {
+        if (newTagName.trim()) {
+            createTag.mutate({
+                name: newTagName.trim(),
+                color: newTagColor
+            }, {
+                onSuccess: (newTag) => {
+                    // Immediately assign the new tag to the task
+                    assignTags.mutate({
+                        taskId: task.id,
+                        tagIds: [newTag.id]
+                    })
+                    setNewTagName('')
+                    setIsCreatingTag(false)
+                },
+                onError: (error) => {
+                    console.error('Failed to create tag:', error)
+                }
+            })
+        }
+    }
+
+    const getRandomColor = () => {
+        const colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFA07A', '#DDA0DD', '#98D8C8', '#F7DC6F']
+        return colors[Math.floor(Math.random() * colors.length)]
     }
 
     const handleClick = (e: React.MouseEvent) => {
@@ -96,7 +128,11 @@ export function TaskTagDropdown({task}: TaskTagDropdownProps) {
                         <ChevronDown className="h-4 w-4 ml-auto text-muted-foreground" />
                     </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="start" className="w-64 max-h-80 overflow-y-auto">
+                <DropdownMenuContent align="start" className="w-64 max-h-80 overflow-y-auto" onInteractOutside={(e) => {
+                    if (isCreatingTag) {
+                        e.preventDefault()
+                    }
+                }}>
                     {/* Current tags */}
                     {taskTags.length > 0 && (
                         <>
@@ -162,6 +198,70 @@ export function TaskTagDropdown({task}: TaskTagDropdownProps) {
                     ) : (
                         <div className="px-2 py-4 text-sm text-muted-foreground text-center">
                             All available tags are already assigned
+                        </div>
+                    )}
+
+                    <DropdownMenuSeparator />
+
+                    {/* Create new tag section */}
+                    {!isCreatingTag ? (
+                        <DropdownMenuItem
+                            onClick={(e) => {
+                                e.preventDefault()
+                                setIsCreatingTag(true)
+                                setNewTagColor(getRandomColor())
+                            }}
+                            className="flex items-center space-x-2 text-primary"
+                        >
+                            <Plus size={16} />
+                            <span>Create new tag</span>
+                        </DropdownMenuItem>
+                    ) : (
+                        <div className="p-2 space-y-2" onClick={(e) => e.stopPropagation()}>
+                            <div className="flex items-center space-x-2">
+                                <button
+                                    onClick={() => setNewTagColor(getRandomColor())}
+                                    className="w-6 h-6 rounded-full border-2 border-gray-300 cursor-pointer hover:scale-110 transition-transform"
+                                    style={{ backgroundColor: newTagColor }}
+                                    title="Click to change color"
+                                />
+                                <Input
+                                    placeholder="Tag name"
+                                    value={newTagName}
+                                    onChange={(e) => setNewTagName(e.target.value)}
+                                    onKeyDown={(e) => {
+                                        if (e.key === 'Enter') {
+                                            handleCreateAndAssignTag()
+                                        } else if (e.key === 'Escape') {
+                                            setIsCreatingTag(false)
+                                            setNewTagName('')
+                                        }
+                                    }}
+                                    className="flex-1 h-8"
+                                    autoFocus
+                                />
+                            </div>
+                            <div className="flex items-center space-x-2">
+                                <Button
+                                    size="sm"
+                                    onClick={handleCreateAndAssignTag}
+                                    disabled={!newTagName.trim() || createTag.isPending}
+                                    className="flex-1 h-7"
+                                >
+                                    {createTag.isPending ? 'Creating...' : 'Create'}
+                                </Button>
+                                <Button
+                                    size="sm"
+                                    variant="outline"
+                                    onClick={() => {
+                                        setIsCreatingTag(false)
+                                        setNewTagName('')
+                                    }}
+                                    className="flex-1 h-7"
+                                >
+                                    Cancel
+                                </Button>
+                            </div>
                         </div>
                     )}
                 </DropdownMenuContent>
