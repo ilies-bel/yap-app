@@ -25,7 +25,14 @@ export function TaskTagDropdown({task}: TaskTagDropdownProps) {
         if (!taskTagIds.includes(tag.id)) {
             assignTags.mutate({
                 taskId: task.id,
-                tagIds: [...taskTagIds, tag.id]
+                tagIds: [tag.id]  // Only send the new tag ID to add
+            }, {
+                onError: (error) => {
+                    console.error('Failed to add tag:', error)
+                },
+                onSuccess: () => {
+                    console.log('Tag added successfully')
+                }
             })
         }
         setIsOpen(false)
@@ -35,6 +42,13 @@ export function TaskTagDropdown({task}: TaskTagDropdownProps) {
         removeTags.mutate({
             taskId: task.id,
             tagIds: [tagId]
+        }, {
+            onError: (error) => {
+                console.error('Failed to remove tag:', error)
+            },
+            onSuccess: () => {
+                console.log('Tag removed successfully')
+            }
         })
     }
 

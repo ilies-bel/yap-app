@@ -205,13 +205,21 @@ export function useAssignTagsToTask() {
     
     return useMutation({
         mutationFn: async ({taskId, tagIds}: {taskId: number, tagIds: number[]}) => {
+            console.log('Assigning tags to task:', { taskId, tagIds })
             const response = await httpClient.post(`/tags/tasks/${taskId}/tags`, {tagIds})
+            console.log('Response from backend:', response.data)
             return z.array(tagSchema).parse(response.data)
         },
-        onSuccess: (_, {taskId}) => {
-            queryClient.invalidateQueries({queryKey: ['task-tags', taskId]})
-            queryClient.invalidateQueries({queryKey: ['tasks']})
-            queryClient.invalidateQueries({queryKey: ['tags']})
+        onSuccess: async (data, {taskId}) => {
+            console.log('Successfully assigned tags:', data)
+            // Invalidate and refetch to ensure UI updates
+            await queryClient.invalidateQueries({queryKey: ['task-tags', taskId]})
+            await queryClient.invalidateQueries({queryKey: ['tasks']})
+            await queryClient.refetchQueries({queryKey: ['tasks']})
+            await queryClient.invalidateQueries({queryKey: ['tags']})
+        },
+        onError: (error) => {
+            console.error('Error assigning tags:', error)
         }
     })
 }
@@ -224,10 +232,12 @@ export function useRemoveTagsFromTask() {
             const response = await httpClient.delete(`/tags/tasks/${taskId}/tags`, {data: {tagIds}})
             return z.array(tagSchema).parse(response.data)
         },
-        onSuccess: (_, {taskId}) => {
-            queryClient.invalidateQueries({queryKey: ['task-tags', taskId]})
-            queryClient.invalidateQueries({queryKey: ['tasks']})
-            queryClient.invalidateQueries({queryKey: ['tags']})
+        onSuccess: async (_, {taskId}) => {
+            // Invalidate and refetch to ensure UI updates
+            await queryClient.invalidateQueries({queryKey: ['task-tags', taskId]})
+            await queryClient.invalidateQueries({queryKey: ['tasks']})
+            await queryClient.refetchQueries({queryKey: ['tasks']})
+            await queryClient.invalidateQueries({queryKey: ['tags']})
         }
     })
 }
