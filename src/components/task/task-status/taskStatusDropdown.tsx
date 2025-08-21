@@ -1,25 +1,47 @@
 "use client"
 
-import {Select, SelectContent, SelectItem, SelectTrigger} from "@/components/ui/select"
+import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger} from "@/components/ui/dropdown-menu"
 import {Status} from "@/services/api/status"
 import {useUpdateTaskStatus} from "@/services/api/task/useUpdateTaskStatus"
-import {Edit3Icon} from "lucide-react"
+import {Circle, CircleDot, CheckCircle2, Clock, Sparkles} from "lucide-react"
 import {Task} from "@/services/api/task/taskService"
 
 interface TaskStatusDropdownProps {
     task: Task
 }
 
-const statusLabels: Record<Status, string> = {
-    [Status.TO_REFINE]: 'To Refine',
-    [Status.SOMEDAY]: 'Someday',
-    [Status.TODO]: 'To Do',
-    [Status.IN_PROGRESS]: 'In Progress',
-    [Status.DONE]: 'Done'
+const statusConfig: Record<Status, {label: string, icon: React.ComponentType<{className?: string}>, color: string}> = {
+    [Status.TO_REFINE]: {
+        label: 'To Refine',
+        icon: Sparkles,
+        color: 'text-purple-500'
+    },
+    [Status.SOMEDAY]: {
+        label: 'Someday',
+        icon: Circle,
+        color: 'text-gray-400'
+    },
+    [Status.TODO]: {
+        label: 'To Do',
+        icon: Circle,
+        color: 'text-blue-500'
+    },
+    [Status.IN_PROGRESS]: {
+        label: 'In Progress',
+        icon: CircleDot,
+        color: 'text-yellow-500'
+    },
+    [Status.DONE]: {
+        label: 'Done',
+        icon: CheckCircle2,
+        color: 'text-green-500'
+    }
 }
 
 export function TaskStatusDropdown({task}: TaskStatusDropdownProps) {
     const updateTaskStatus = useUpdateTaskStatus()
+    const currentStatus = statusConfig[task.status]
+    const Icon = currentStatus.icon
 
     const handleStatusChange = (newStatus: Status) => {
         updateTaskStatus.mutate({
@@ -34,18 +56,28 @@ export function TaskStatusDropdown({task}: TaskStatusDropdownProps) {
 
     return (
         <div onClick={handleClick}>
-            <Select value={task.status} onValueChange={handleStatusChange}>
-                <SelectTrigger className="w-6 h-6 p-0 border-none bg-transparent hover:bg-gray-100 rounded">
-                    <Edit3Icon className="h-4 w-4 text-gray-600"/>
-                </SelectTrigger>
-                <SelectContent>
-                    {Object.entries(statusLabels).map(([status, label]) => (
-                        <SelectItem key={status} value={status}>
-                            {label}
-                        </SelectItem>
-                    ))}
-                </SelectContent>
-            </Select>
+            <DropdownMenu>
+                <DropdownMenuTrigger className="focus:outline-none">
+                    <div className="w-8 h-8 flex items-center justify-center hover:bg-gray-100 rounded transition-colors">
+                        <Icon className={`h-5 w-5 ${currentStatus.color}`}/>
+                    </div>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start">
+                    {Object.entries(statusConfig).map(([status, config]) => {
+                        const ItemIcon = config.icon
+                        return (
+                            <DropdownMenuItem
+                                key={status}
+                                onClick={() => handleStatusChange(status as Status)}
+                                className="flex items-center space-x-2"
+                            >
+                                <ItemIcon className={`h-4 w-4 ${config.color}`}/>
+                                <span>{config.label}</span>
+                            </DropdownMenuItem>
+                        )
+                    })}
+                </DropdownMenuContent>
+            </DropdownMenu>
         </div>
     )
 }

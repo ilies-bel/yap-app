@@ -3,7 +3,6 @@ import useTasks, {Task} from "@/services/api/task/taskService";
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table";
 import {Status} from "@/services/api/status";
 import {RowsWithSkeleton} from "@/components/task/rowsWithSkeleton";
-import {StatusBadge} from "@/components/ui/status-badge";
 import {TaskDetailCard} from "@/components/task/task-detail/taskDetailCard";
 import {TaskStatusDropdown} from "@/components/task/task-status/taskStatusDropdown";
 import {TaskTitle} from "@/components/task/task-title/taskTitle";
@@ -69,7 +68,6 @@ export function TaskList({filters, hideStatusColumn = false}: TaskListProps) {
                         <TableHead>Name</TableHead>
                         <TableHead>Context</TableHead>
                         <TableHead>Tags</TableHead>
-                        {!hideStatusColumn && <TableHead>Status</TableHead>}
                     </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -92,11 +90,6 @@ export function TaskList({filters, hideStatusColumn = false}: TaskListProps) {
                                 <TableCell>
                                     <TaskTagDropdown task={task} />
                                 </TableCell>
-                                {!hideStatusColumn && (
-                                    <TableCell className={"flex justify-end"}>
-                                        <StatusBadge status={task.status}/>
-                                    </TableCell>
-                                )}
                             </TableRow>
                         ))}
                     </RowsWithSkeleton>
@@ -104,7 +97,7 @@ export function TaskList({filters, hideStatusColumn = false}: TaskListProps) {
                     {/* Infinite scroll trigger */}
                     {hasNextPage && (
                         <TableRow ref={inViewRef}>
-                            <TableCell colSpan={hideStatusColumn ? 4 : 5} className="text-center py-4">
+                            <TableCell colSpan={4} className="text-center py-4">
                                 {isFetchingNextPage ? (
                                     <div className="flex items-center justify-center space-x-2">
                                         <div className="w-4 h-4 border-2 border-gray-300 border-t-blue-600 rounded-full animate-spin"></div>
