@@ -4,6 +4,7 @@ import {
     Sidebar,
     SidebarContent,
     SidebarFooter,
+    SidebarHeader,
     SidebarMenu,
     SidebarMenuButton,
     SidebarMenuItem,
@@ -13,6 +14,7 @@ import {LogOutSidebarMenuButton} from "@/components/sidebar/log-out-sidebar-menu
 import {SidebarToggleSection} from "@/components/sidebar/sidebar-toggle-section";
 import {usePathname} from "next/navigation";
 import Link from "next/link";
+import {ChatPopup} from "@/components/chat/chatPopup";
 
 const items = [
     {
@@ -49,6 +51,13 @@ export function AppSidebar() {
 
     return (
         <Sidebar collapsible="icon">
+            <SidebarHeader className="flex flex-row items-center justify-between p-2">
+                <div className="flex items-center space-x-2">
+                    <span className="font-semibold text-lg">YAP</span>
+                </div>
+                <ChatPopup />
+            </SidebarHeader>
+            
             <SidebarContent className={"py-2 relative"}>
                 <SidebarToggleSection/>
                 <SidebarMenu className="px-2">
