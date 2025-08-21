@@ -1,7 +1,6 @@
 "use client"
 import {TaskList} from "@/components/task/taskList";
 import {Status} from "@/services/api/status"
-import {NewTaskButton} from "@/components/task/new-task/newTaskButton";
 import {CurrentContexts} from "@/app/dashboard/currentContexts";
 import {useCurrentContexts} from "@/services/api/context/useCurrentContexts";
 
@@ -12,13 +11,9 @@ export default function NextActionsPage() {
         <div>
             <CurrentContexts/>
 
-            <div className={"p-2"}>
-                <NewTaskButton hideBody={false}/>
-            </div>
-
             <TaskList 
                 filters={{
-                    status: [Status.TODO],
+                    status: [Status.IN_PROGRESS, Status.TODO],
                     contextId: contexts?.deviceContext?.id
                 }}
                 hideStatusColumn={true}
